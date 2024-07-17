@@ -1,0 +1,148 @@
+#!/usr/bin/env php
+<?php
+
+define('LARAVEL_START', microtime(true));
+
+/*
+|--------------------------------------------------------------------------
+| Register The Auto Loader
+|--------------------------------------------------------------------------
+|
+| Composer provides a convenient, automatically generated class loader
+| for our application. We just need to utilize it! We'll require it
+| into the script here so that we do not have to worry about the
+| loading of any of our classes manually. It's great to relax.
+|
+*/
+
+require __DIR__.'/vendor/autoload.php';
+
+$app = require_once __DIR__.'/bootstrap/app.php';
+
+/*
+|--------------------------------------------------------------------------
+| Run The Artisan Application
+|--------------------------------------------------------------------------
+|
+| When we run the console application, the current CLI command will be
+| executed in this console and the response sent back to a terminal
+| or another output device for the developers. Here goes nothing!
+|
+*/
+
+$kernel = $app->make(Illuminate\Contracts\Console\Kernel::class);
+
+$status = $kernel->handle(
+    $input = new Symfony\Component\Console\Input\ArgvInput,
+    new Symfony\Component\Console\Output\ConsoleOutput
+);
+
+/*
+|--------------------------------------------------------------------------
+| Shutdown The Application
+|--------------------------------------------------------------------------
+|
+| Once Artisan has finished running, we will fire off the shutdown events
+| so that any final work may be done by the application before we shut
+| down the process. This is the last thing to happen to the request.
+|
+*/
+
+$kernel->terminate($input, $status);
+
+exit($status);
+
+// {{-- css --}}
+//     <link href="{{ mix('css/bootstrap.min.css') }}" rel="stylesheet">
+//     <link href="{{ mix('css/owl.carousel.min.css') }}" rel="stylesheet">
+//     <link href="{{ mix('css/flaticon.css') }}" rel="stylesheet">
+//     <link href="{{ mix('css/slicknav.css') }}" rel="stylesheet">
+//     <link href="{{ mix('css/animate.min.css') }}" rel="stylesheet">
+//     <link href="{{ mix('css/magnific-popup.css') }}" rel="stylesheet">
+//     <link href="{{ mix('css/fontawesome-all.min.css') }}" rel="stylesheet">
+//     <link href="{{ mix('css/themify-icons.css') }}" rel="stylesheet">
+//     <link href="{{ mix('css/slick.css') }}" rel="stylesheet">
+//     <link href="{{ mix('css/nice-select.css') }}" rel="stylesheet">
+//     <link href="{{ mix('css/style.css') }}" rel="stylesheet">
+
+// <!-- All JS Custom Plugins Link Here here -->
+//     <script src=" {{ mix('js/vendor/modernizr-3.5.0.min.js') }}"></script>
+//     <!-- Jquery, Popper, Bootstrap -->
+//     <script src=" {{ mix('js/vendor/jquery-1.12.4.min.js') }}"></script>
+//     <script src=" {{ mix('js/popper.min.js') }}"></script>
+//     <script src=" {{ mix('js/bootstrap.min.js') }}"></script>
+//     <!-- Jquery Mobile Menu -->
+//     <script src=" {{ mix('js/jquery.slicknav.min.js') }}"></script>
+
+//     <!-- Jquery Slick , Owl-Carousel Plugins -->
+//     <script src=" {{ mix('js/owl.carousel.min.js') }}"></script>
+//     <script src=" {{ mix('js/slick.min.js') }}"></script>
+//     <!-- Date Picker -->
+//     <script src=" {{ mix('js/gijgo.min.js') }}"></script>
+//     <!-- One Page, Animated-HeadLin -->
+//     <script src=" {{ mix('js/wow.min.js') }}"></script>
+//     <script src=" {{ mix('js/animated.headline.js') }}"></script>
+//     <script src=" {{ mix('js/jquery.magnific-popup.js') }}"></script>
+
+//     <!-- Breaking New Pluging -->
+//     <script src=" {{ mix('js/jquery.ticker.js') }}"></script>
+//     <script src=" {{ mix('js/site.js') }}"></script>
+
+//     <!-- Scrollup, nice-select, sticky -->
+//     <script src=" {{ mix('js/jquery.scrollUp.min.js') }}"></script>
+//     <script src=" {{ mix('js/jquery.nice-select.min.js') }}"></script>
+//     <script src=" {{ mix('js/jquery.sticky.js') }}"></script>
+
+//     <!-- contact js -->
+//     <script src=" {{ mix('js/contact.js') }}"></script>
+//     <script src=" {{ mix('js/jquery.form.js') }}"></script>
+//     <script src=" {{ mix('js/jquery.validate.min.js') }}"></script>
+//     <script src=" {{ mix('js/mail-script.js') }}"></script>
+//     <script src=" {{ mix('js/jquery.ajaxchimp.min.js') }}"></script>
+
+//     <!-- Jquery Plugins, main Jquery -->
+//     <script src=" {{ mix('js/plugins.js') }}"></script>
+//     <script src=" {{ mix('js/main.js') }}"></script>
+
+
+// {{-- All JS Custom Plugins Link Here here --}}
+// @vite('resources/assets/js/vendor/modernizr-3.5.0.min.js')
+
+// {{-- Jquery, Popper, Bootstrap --}}
+// @vite('resources/assets/js/vendor/jquery-1.12.4.min.js')
+// {{-- @vite('resources/assets/js/popper.min.js') --}}
+// {{-- @vite('resources/assets/js/bootstrap.min.js') --}}
+
+// <!-- Jquery Mobile Menu -->
+// @vite('resources/assets/js/jquery.slicknav.min.js')
+
+// <!-- Jquery Slick , Owl-Carousel Plugins -->
+// @vite('resources/assets/js/owl.carousel.min.js')
+// @vite('resources/assets/js/slick.min.js')
+
+// <!-- Date Picker -->
+// @vite('resources/assets/js/gijgo.min.js')
+
+// <!-- One Page, Animated-HeadLin -->
+// {{-- @vite('resources/assets/js/wow.min.js') --}}
+// @vite('resources/assets/js/animated.headline.js')
+// @vite('resources/assets/js/jquery.magnific-popup.js')
+
+// <!-- Breaking New Pluging -->
+// @vite('resources/assets/js/jquery.ticker.js')
+// @vite('resources/assets/js/site.js')
+
+// <!-- Scrollup, nice-select, sticky -->
+// @vite('resources/assets/js/jquery.scrollUp.min.js')
+// @vite('resources/assets/js/jquery.nice-select.min.js')
+// @vite('resources/assets/js/jquery.sticky.js')
+
+// <!-- contact js -->
+// @vite('resources/assets/js/contact.js')
+// @vite('resources/assets/js/jquery.form.js')
+// @vite('resources/assets/js/jquery.validate.min.js')
+// @vite('resources/assets/js/mail-script.js')
+// @vite('resources/assets/js/jquery.ajaxchimp.min.js')
+
+// Khi đi làm hiệu suất chức năng phải nhanh
+// Phải tiết kiệm được bộ nhớ
