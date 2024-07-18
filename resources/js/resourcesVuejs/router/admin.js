@@ -48,6 +48,18 @@ const admin = [
                 component: () => import('../pages/admin/detail-new/index.vue'),
             },
 
+            {
+                path: "detail-new/:id/create",
+                name: "admin-detail-new-create",
+                component: () => import('../pages/admin/detail-new/create.vue'),
+            },
+
+            {
+                path: "detail-new/:id/edit/:idNew",
+                name: "admin-detail-new-edit",
+                component: () => import('../pages/admin/detail-new/edit.vue'),
+            },
+
             // Quản lý users
             {
                 path: "users",

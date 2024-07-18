@@ -70,3 +70,14 @@ Route::delete('/news/{id}', [NewsController::class,'destroy']);
 
 // DetailNew
 Route::get('/detail-new/{id}', [DetailNewController::class,'index'])->name('detailNew.index');
+
+// Create detailNew
+Route::get('/detail-new/{id}/create', [DetailNewController::class,'create']);
+Route::post('/post-detail-new', [DetailNewController::class,'store']);
+
+// Update detailNew
+Route::get('/detail-new/{id}/edit/{idNew}', [DetailNewController::class,'edit']);
+Route::put('/detail-new/{id}', [DetailNewController::class,'update']);
+
+// Delete detailNew
+Route::delete('/detail-new/{id}', [DetailNewController::class,'destroy']);

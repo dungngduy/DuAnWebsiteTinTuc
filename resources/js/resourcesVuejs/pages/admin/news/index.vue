@@ -3,7 +3,7 @@
         <div class="row mb-3">
             <div class="col-12 d-flex justify-content-end">
                 <router-link :to="{ name: 'admin-news-create' }">
-                    <a-button type="primary">
+                    <a-button>
                         <i class="fa-solid fa-plus"></i>
                     </a-button>
                 </router-link>
@@ -32,8 +32,8 @@
                                     params: { id: record.id },
                                 }"
                             >
-                                <a-button type="primary" class="me-sm-2 mb-2">
-                                    <i class="fa-regular fa-eye"></i>
+                                <a-button type="primary" class="me-sm-2 mb-2" style="background-color: #00d4ff;">
+                                    <i class="fa-solid fa-file-invoice"></i>
                                 </a-button>
                             </router-link>
                             <router-link

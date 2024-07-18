@@ -1,9 +1,16 @@
 <template>
     <a-card title="Chi tiết bài viết" style="width: 100%">
         <div class="row mb-3">
-            <div class="col-12 d-flex justify-content-end">
-                <router-link :to="{ name: 'admin-news-create' }">
-                    <a-button type="primary">
+            <div class="col-6 d-flex justify-content-start">
+                <router-link :to="{ name: 'admin-news' }">
+                    <a-button>
+                        Quay lại
+                    </a-button>
+                </router-link>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                <router-link :to="{ name: 'admin-detail-new-create', params: idNew }">
+                    <a-button>
                         <i class="fa-solid fa-plus"></i>
                     </a-button>
                 </router-link>
@@ -23,19 +30,20 @@
                             </span>
                         </template>
                         <template v-if="column.key === 'action'">
-                            <!-- <router-link
+                            <router-link
                                 :to="{
-                                    name: 'admin-detail-new',
-                                    params: { id: record.id },
+                                    name: 'admin-detail-new-edit',
+                                    params: { id: record.id, idNew: record.new_id }
                                 }"
                             >
                                 <a-button type="primary" class="me-sm-2 mb-2">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a-button>
-                            </router-link> -->
+                            </router-link>
                             <a-button
                                 type="primary"
                                 danger
+                                @click="deleteDetailNew(record.id)"
                             >
                                 <i class="fa-solid fa-trash"></i>
                             </a-button>
@@ -60,6 +68,7 @@ export default defineComponent({
         useMenu().onSelectedKeys(["admin-news"]);
 
         const detailNews = ref([]);
+        const idNew = ref("");
         const route = useRoute();
         const columns = [
             {
@@ -83,49 +92,50 @@ export default defineComponent({
                 className: "column-action"
             },
         ];
-        const getDetailNews = () => {
+        const getDetailNew = () => {
             const newId = route.params.id;
             axios
                 .get(`http://127.0.0.1:8000/api/detail-new/${newId}`)
                 .then((res) => {
                     detailNews.value = res.data;
-                    // console.log(res.data);
+                    idNew.value = res.data.new_id;
                 })
                 .catch((err) => {
                     console.log(err);
                 });
         };
 
-        getDetailNews();
+        getDetailNew();
 
-        // const deleteNews = (id) => {
-        //     Modal.confirm({
-        //         content: "Bạn có chắc chắn muốn xóa bài viết này?",
-        //         icon: createVNode(ExclamationCircleOutlined),
-        //         onOk() {
-        //             axios
-        //                 .delete(`http://127.0.0.1:8000/api/news/${id}`)
-        //                 .then((res) => {
-        //                     if (res.status == 200) {
-        //                         message.success("Xóa bài viết thành công");
-        //                         getNews();
-        //                     }
-        //                 })
-        //                 .catch((err) => {
-        //                     console.log(err);
-        //                 });
-        //         },
-        //         cancelText: "Hủy",
-        //         onCancel() {
-        //             Modal.destroyAll();
-        //         },
-        //     });
-        // };
+        const deleteDetailNew = (id) => {
+            Modal.confirm({
+                content: "Bạn có chắc chắn muốn xóa nội dung này?",
+                icon: createVNode(ExclamationCircleOutlined),
+                onOk() {
+                    axios
+                        .delete(`http://127.0.0.1:8000/api/detail-new/${id}`)
+                        .then((res) => {
+                            if (res.status == 200) {
+                                message.success("Xóa nội dung thành công");
+                                getDetailNew();
+                            }
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                },
+                cancelText: "Hủy",
+                onCancel() {
+                    Modal.destroyAll();
+                },
+            });
+        };
 
         return {
             detailNews,
             columns,
-            // deleteNews,
+            idNew,
+            deleteDetailNew,
         };
     },
 });

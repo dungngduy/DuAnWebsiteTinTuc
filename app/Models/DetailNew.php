@@ -12,5 +12,11 @@ class DetailNew extends Model
     protected $fillable = [
         'main_content',
         'order_index',
+        'new_id'
     ];
+
+    public function getTable()
+    {
+        return 'detail_new'; // Trả về tên bảng cụ thể
+    }
 }
