@@ -194,27 +194,12 @@ export default defineComponent({
                 const file = event.target.files[0];
                 const reader = new FileReader();
                 reader.onload = () => {
-                    fileList.value = reader.result; // Store Base64 string for preview
-                    news.image = file; // Store the image file for submission
+                    fileList.value = reader.result;
+                    news.image = file;
                 };
                 reader.readAsDataURL(file);
             }
         };
-        // const handleFileChange = (event) => {
-        //     if (event && event.target && event.target.files) {
-        //         const files = event.target.files;
-        //         if (files.length > 0) {
-        //             fileList.value = [{
-        //                 uid: files[0].name,
-        //                 name: files[0].name,
-        //                 status: 'done',
-        //                 originFileObj: files[0],
-        //                 url: URL.createObjectURL(files[0]),
-        //             }];
-        //             news.image = files[0]; // Set news.image to the new file object
-        //         }
-        //     }
-        // };
 
         var formData = new FormData();
         const updateNews = () => {

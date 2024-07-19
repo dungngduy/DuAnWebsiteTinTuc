@@ -1,5 +1,5 @@
 <template>
-    <a-card title="Chi tiết bài viết" style="width: 100%">
+    <a-card title="Nội dung bài viết" style="width: 100%">
         <div class="row mb-3">
             <div class="col-6 d-flex justify-content-start">
                 <router-link :to="{ name: 'admin-news' }">
@@ -93,7 +93,7 @@ export default defineComponent({
             },
         ];
         const getDetailNew = () => {
-            const newId = route.params.id;
+            const newId = route.params.idNew;
             axios
                 .get(`http://127.0.0.1:8000/api/detail-new/${newId}`)
                 .then((res) => {

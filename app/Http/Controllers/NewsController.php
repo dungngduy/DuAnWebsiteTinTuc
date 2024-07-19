@@ -87,10 +87,10 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
         $id = News::findOrFail($id);
-        return redirect()->route('detailNew.index', ['id'=> $id]);
+        return redirect()->route('detailNew.index', ['idNew'=> $id]);
     }
 
     /**

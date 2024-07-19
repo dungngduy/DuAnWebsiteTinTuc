@@ -146,7 +146,7 @@ export default defineComponent({
 
         const deleteUsers = (id) => {
             Modal.confirm({
-                content: "Bạn có chắc chắn muốn xóa người này?",
+                content: "Bạn có chắc chắn muốn xóa tài khoản này?",
                 icon: createVNode(ExclamationCircleOutlined),
                 onOk() {
                     axios

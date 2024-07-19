@@ -84,15 +84,6 @@
                         <div
                             class="d-sm-flex justify-content-between text-center"
                         >
-                            <p class="like-info">
-                                <span class="align-middle"
-                                    ><i class="fa fa-heart"></i
-                                ></span>
-                                Lily and 4 people like this
-                            </p>
-                            <div class="col-sm-4 text-center my-2 my-sm-0">
-                                <!-- <p class="comment-count"><span class="align-middle"><i class="fa fa-comment"></i></span> 06 Comments</p> -->
-                            </div>
                             <ul class="social-icons">
                                 <li>
                                     <a href="#"
@@ -115,62 +106,6 @@
                                     ></a>
                                 </li>
                             </ul>
-                        </div>
-                        <div class="navigation-area">
-                            <div class="row">
-                                <div
-                                    class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center"
-                                >
-                                    <div class="thumb">
-                                        <a href="#">
-                                            <img
-                                                class="img-fluid"
-                                                src="assets/img/post/preview.png"
-                                                alt=""
-                                            />
-                                        </a>
-                                    </div>
-                                    <div class="arrow">
-                                        <a href="#">
-                                            <span
-                                                class="lnr text-white ti-arrow-left"
-                                            ></span>
-                                        </a>
-                                    </div>
-                                    <div class="detials">
-                                        <p>Prev Post</p>
-                                        <a href="#">
-                                            <h4>Space The Final Frontier</h4>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div
-                                    class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center"
-                                >
-                                    <div class="detials">
-                                        <p>Next Post</p>
-                                        <a href="#">
-                                            <h4>Telescopes 101</h4>
-                                        </a>
-                                    </div>
-                                    <div class="arrow">
-                                        <a href="#">
-                                            <span
-                                                class="lnr text-white ti-arrow-right"
-                                            ></span>
-                                        </a>
-                                    </div>
-                                    <div class="thumb">
-                                        <a href="#">
-                                            <img
-                                                class="img-fluid"
-                                                src="assets/img/post/next.png"
-                                                alt=""
-                                            />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="blog-author">
@@ -350,39 +285,6 @@
                                         ></textarea>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <input
-                                            class="form-control"
-                                            name="name"
-                                            id="name"
-                                            type="text"
-                                            placeholder="Name"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <input
-                                            class="form-control"
-                                            name="email"
-                                            id="email"
-                                            type="email"
-                                            placeholder="Email"
-                                        />
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <input
-                                            class="form-control"
-                                            name="website"
-                                            id="website"
-                                            type="text"
-                                            placeholder="Website"
-                                        />
-                                    </div>
-                                </div>
                             </div>
                             <div class="form-group">
                                 <button
@@ -518,35 +420,6 @@
                                     <p>01 Hours ago</p>
                                 </div>
                             </div>
-                        </aside>
-                        <aside class="single_sidebar_widget tag_cloud_widget">
-                            <h4 class="widget_title">Tag Clouds</h4>
-                            <ul class="list">
-                                <li>
-                                    <a href="#">project</a>
-                                </li>
-                                <li>
-                                    <a href="#">love</a>
-                                </li>
-                                <li>
-                                    <a href="#">technology</a>
-                                </li>
-                                <li>
-                                    <a href="#">travel</a>
-                                </li>
-                                <li>
-                                    <a href="#">restaurant</a>
-                                </li>
-                                <li>
-                                    <a href="#">life style</a>
-                                </li>
-                                <li>
-                                    <a href="#">design</a>
-                                </li>
-                                <li>
-                                    <a href="#">illustration</a>
-                                </li>
-                            </ul>
                         </aside>
                         <aside class="single_sidebar_widget instagram_feeds">
                             <h4 class="widget_title">Instagram Feeds</h4>

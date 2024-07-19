@@ -101,7 +101,7 @@ export default defineComponent({
             .catch(err => {
                 if (err.response && err.response.data && err.response.data.errors) {
                     errors.value = err.response.data.errors;
-                    message.warning('Cập nhật không thành công');
+                    message.warning('Tạo mới không thành công');
                 }
             })
         }

@@ -43,13 +43,13 @@ const admin = [
 
             // Quản lý chi tiết bài viết
             {
-                path: "detail-new/:id",
+                path: "detail-new/:idNew",
                 name: "admin-detail-new",
                 component: () => import('../pages/admin/detail-new/index.vue'),
             },
 
             {
-                path: "detail-new/:id/create",
+                path: "detail-new/:idNew/create",
                 name: "admin-detail-new-create",
                 component: () => import('../pages/admin/detail-new/create.vue'),
             },

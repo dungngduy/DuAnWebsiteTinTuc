@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="updateCategories()">
-        <a-card title="Sửa danh mục bài viết" style="width: 100%">
+        <a-card title="Cập nhật danh mục bài viết" style="width: 100%">
             <div class="row">
                 <div class="col-12 col-sm-12">
                     <div class="row mb-3">

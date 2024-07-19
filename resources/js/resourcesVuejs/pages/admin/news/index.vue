@@ -1,5 +1,5 @@
 <template>
-    <a-card title="Danh mục bài viết" style="width: 100%">
+    <a-card title="Tất cả bài viết" style="width: 100%">
         <div class="row mb-3">
             <div class="col-12 d-flex justify-content-end">
                 <router-link :to="{ name: 'admin-news-create' }">
@@ -29,7 +29,7 @@
                             <router-link
                                 :to="{
                                     name: 'admin-detail-new',
-                                    params: { id: record.id },
+                                    params: { idNew: record.id },
                                 }"
                             >
                                 <a-button type="primary" class="me-sm-2 mb-2" style="background-color: #00d4ff;">
@@ -117,7 +117,6 @@ export default defineComponent({
             axios
                 .get("http://127.0.0.1:8000/api/news")
                 .then((res) => {
-                    // news.value = res.data;
                     const processedNews = res.data.map(item => ({
                         ...item,
                         image: item.image.replace(/"/g, '')

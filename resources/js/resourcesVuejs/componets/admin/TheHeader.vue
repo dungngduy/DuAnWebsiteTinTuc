@@ -26,7 +26,10 @@
             <div
                 class="col-sm-3 d-none d-sm-flex align-items-center justify-content-sm-end"
             >
-                <span>Admin</span>
+                <span class="me-3">Admin</span>
+                <router-link :to="'/'">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </router-link>
             </div>
 
             <div

@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class DetailNewController extends Controller
 {
-    public function index($id)
+    public function index($idNew)
     {
-        $idNew = News::find($id);
+        $idNews = News::find($idNew);
         $detailNew = DB::table('detail_new')
-            ->where('detail_new.new_id','=', $idNew->id)
+            ->where('detail_new.new_id','=', $idNews->id)
             ->select(
                 'detail_new.*',
             )
@@ -21,9 +21,9 @@ class DetailNewController extends Controller
         return response()->json($detailNew);
     }
 
-    public function create(String $id)
+    public function create(String $idNew)
     {
-        $idNew = News::find($id);
+        $idNew = News::find($idNew);
         return response()->json([
             'idNew' => $idNew->id,
         ]);

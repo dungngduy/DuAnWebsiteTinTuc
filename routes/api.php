@@ -23,7 +23,6 @@ use App\Http\Controllers\UserController;
 // });
 
 // Users
-// Route::get('/user/{id}', [UserController::class, 'show']);
 Route::get('/users', [UserController::class, 'index']);
 
 // Create
@@ -69,10 +68,10 @@ Route::delete('/news/{id}', [NewsController::class,'destroy']);
 
 
 // DetailNew
-Route::get('/detail-new/{id}', [DetailNewController::class,'index'])->name('detailNew.index');
+Route::get('/detail-new/{idNew}', [DetailNewController::class,'index'])->name('detailNew.index');
 
 // Create detailNew
-Route::get('/detail-new/{id}/create', [DetailNewController::class,'create']);
+Route::get('/detail-new/{idNew}/create', [DetailNewController::class,'create']);
 Route::post('/post-detail-new', [DetailNewController::class,'store']);
 
 // Update detailNew

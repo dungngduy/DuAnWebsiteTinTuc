@@ -64,7 +64,7 @@ export default defineComponent({
 
         const router = useRouter();
         const route = useRoute();
-        const idNew = ref("");
+        const idNew = ref();
         const detailNew = reactive({
             main_content: "",
             order_index: "",
@@ -73,11 +73,10 @@ export default defineComponent({
         const errors = ref({});
 
         const getDetailNewCreate = () => {
-            const idNew = route.params.id;
+            const idNew = route.params.idNew;
             axios.get(`http://127.0.0.1:8000/api/detail-new/${idNew}/create`)
             .then(res => {
                 detailNew.new_id = res.data.idNew;
-                idNew.value = res.data.idNew;
             })
             .catch(err => {
                 console.log(err);
@@ -95,7 +94,7 @@ export default defineComponent({
             .then(res => {
                 if(res.status == 200) {
                     message.success('Tạo mới nội dung thành công');
-                    router.push({ name: 'admin-detail-new', params: idNew });
+                    router.push({ name: 'admin-detail-new', params: detailNew.new_id });
                 }
             })
             .catch(err => {

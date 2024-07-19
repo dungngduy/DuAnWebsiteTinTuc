@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="updateDetailNew()">
-        <a-card title="Tạo mới nội dung bài viết" style="width: 100%">
+        <a-card title="Cập nhật nội dung bài viết" style="width: 100%">
             <div class="row">
                 <div class="col-12 col-sm-12">
                     <div class="row mb-3">
@@ -64,7 +64,6 @@ export default defineComponent({
 
         const router = useRouter();
         const route = useRoute();
-        const idNew = ref("");
         const detailNew = reactive({
             main_content: "",
             order_index: "",
@@ -80,7 +79,6 @@ export default defineComponent({
                 detailNew.main_content = res.data.detailNew.main_content;
                 detailNew.order_index = res.data.detailNew.order_index;
                 detailNew.new_id = res.data.detailNew.new_id;
-                idNew.value = res.data.idNew;
             })
             .catch(err => {
                 console.log(err);
@@ -99,6 +97,7 @@ export default defineComponent({
             .then(res => {
                 if(res.status == 200) {
                     message.success('Cập nhật nội dung thành công');
+                    router.push({ name: "admin-detail-new", params: detailNew.new_id })
                 }
             })
             .catch(err => {
@@ -112,7 +111,6 @@ export default defineComponent({
         return {
             ...toRefs(detailNew),
             errors,
-            idNew,
             filterOption,
             updateDetailNew,
         }
