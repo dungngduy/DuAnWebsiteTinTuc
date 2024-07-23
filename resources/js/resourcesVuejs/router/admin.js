@@ -2,6 +2,7 @@ const admin = [
     {
         path: "/admin",
         component: () => import('../layouts/admin.vue'),
+        meta: { requiresAuth: true, requiresRole: "1" },
         children: [
             // Quản lý danh mục bài viết
             {

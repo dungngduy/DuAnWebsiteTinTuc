@@ -69,6 +69,7 @@ import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
 import { createVNode, defineComponent, ref } from "vue";
 import { Modal } from "ant-design-vue";
 import { message } from "ant-design-vue";
+import { useRouter } from "vue-router";
 import { useMenu } from "../../../storePinia/storeMenu.js";
 import axios from "axios";
 export default defineComponent({
@@ -76,6 +77,7 @@ export default defineComponent({
         useMenu().onSelectedKeys(["admin-categories"]);
 
         const categories = ref([]);
+        const router = useRouter();
         const columns = [
             {
                 title: "#",
@@ -112,8 +114,9 @@ export default defineComponent({
                 .then((res) => {
                     categories.value = res.data;
                 })
-                .catch((err) => {
-                    console.log(err);
+                .catch(() => {
+                    router.push('/');
+                    message.warning("Bạn cần có tài khoản quản trị để có thể truy cập vào trang này?");
                 });
         };
 

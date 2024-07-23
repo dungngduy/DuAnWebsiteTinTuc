@@ -13,8 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
+// Với mọi router
 Route::view("/{any}", "app")->where("any", ".*");

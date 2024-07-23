@@ -5,9 +5,15 @@
                 <div class="col-12 col-sm-4">
                     <div class="col-12 d-flex justify-content-center">
                         <a-avatar :size="250">
-                            <template #icon>
+                            <template v-if="avatar" #icon>
                                 <img
-                                    src="https://supercharge.info/images/avatar-placeholder.png"
+                                    :src="`/storage/uploads/users/${avatar}`"
+                                    alt="Avatar"
+                                />
+                            </template>
+                            <template v-else #icon>
+                                <img
+                                    src="https://static2.yan.vn/YanNews/2167221/202102/facebook-cap-nhat-avatar-doi-voi-tai-khoan-khong-su-dung-anh-dai-dien-e4abd14d.jpg"
                                     alt="Avatar"
                                 />
                             </template>
@@ -200,6 +206,7 @@ export default defineComponent({
         const departments = ref([]);
         const users = reactive({
             username: "",
+            avatar: "",
             name: "",
             email: "",
             password: "",
@@ -219,6 +226,9 @@ export default defineComponent({
             .then(res => {
                 users.status_id = res.data.users.status_id;
                 users.username = res.data.users.username;
+                if (res.data.users.avatar) {
+                    users.avatar = res.data.users.avatar.replace(/"/g, '');
+                }
                 users.name = res.data.users.name;
                 users.email = res.data.users.email;
                 users.department_id = res.data.users.department_id;

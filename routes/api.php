@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\DetailNewController;
-use App\Http\Controllers\NewsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DetailNewController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\Login\LoginController;
+use App\Http\Controllers\Login\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,7 @@ use App\Http\Controllers\UserController;
 //     return $request->user();
 // });
 
+// Admin
 // Users
 Route::get('/users', [UserController::class, 'index']);
 
@@ -80,3 +83,11 @@ Route::put('/detail-new/{id}', [DetailNewController::class,'update']);
 
 // Delete detailNew
 Route::delete('/detail-new/{id}', [DetailNewController::class,'destroy']);
+
+// Client
+// Pegister
+Route::post('/register', [RegisterController::class,'store']);
+
+// Login
+Route::post('/login', [LoginController::class,'index']);
+Route::post('/logout', [LoginController::class,'logout']);

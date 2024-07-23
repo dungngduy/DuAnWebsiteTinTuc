@@ -18,8 +18,8 @@
                             required
                         />
                     </div>
-                    <div class="form-actions">
-                        <button type="submit">Gửi thông tin</button>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <a-button html-type="submit">Gửi thông tin</a-button>
                     </div>
                     <div class="forget-pass">
                         <a href="/">Quay lại đăng nhập</a>
@@ -131,36 +131,5 @@ input {
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
-}
-
-.form-actions {
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-}
-
-button:hover {
-    opacity: 0.8;
-}
-
-.forget-pass {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 15px;
-}
-
-.forget-pass a {
-    color: #007bff;
-    text-decoration: none;
 }
 </style>

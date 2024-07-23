@@ -3,13 +3,6 @@ const user = [
         path: "/",
         component: () => import('../layouts/user.vue'),
         children: [
-            // Login
-            {
-                path: "/login",
-                name: "dang-nhap",
-                component: () => import('../pages/user/login/login.vue'),
-            },
-
             // Index
             {
                 path: "/",
@@ -29,6 +22,13 @@ const user = [
                 path: "/chi-tiet-bai-viet",
                 name: "chi-tiet-bai-viet",
                 component: () => import('../pages/user/detail-blog.vue'),
+            },
+
+            // Info-user
+            {
+                path: "/thong-tin-nguoi-dung",
+                name: "thong-tin-nguoi-dung",
+                component: () => import('../pages/user/login/info-user.vue'),
             },
         ]
     }

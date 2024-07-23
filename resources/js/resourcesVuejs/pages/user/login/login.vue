@@ -14,8 +14,12 @@
                             type="text"
                             id="username"
                             v-model="username"
-                            required
-                        />
+                        /><br>
+                        <small
+                            v-if="errors.username"
+                            class="text-danger"
+                            >{{ errors.username[0] }}</small
+                        >
                     </div>
                     <div class="form-group">
                         <label for="password">Mật khẩu:</label>
@@ -23,14 +27,23 @@
                             type="password"
                             id="password"
                             v-model="password"
-                            required
-                        />
+                        /><br>
+                        <small
+                            v-if="errors.password"
+                            class="text-danger"
+                            >{{ errors.password[0] }}</small
+                        >
                     </div>
                     <div class="forget-password">
                         <a @click="openForgetPasswordPopup" href="#">Quên mật khẩu</a>
                     </div>
-                    <div class="form-actions">
-                        <button type="submit">Đăng nhập</button>
+                    <small
+                        v-if="message"
+                        class="text-danger"
+                        >{{ message }}</small
+                    >
+                    <div class="d-flex justify-content-center align-items-center">
+                        <a-button html-type="submit">Đăng nhập</a-button>
                     </div>
                 </form>
                 <div class="register-link">
@@ -44,6 +57,8 @@
 </template>
 
 <script>
+import { message } from 'ant-design-vue';
+import axios from "axios";
 import RegisterPopup from "../login/register.vue";
 import ForgetPasswordPopup from "../login/forget-password.vue";
 
@@ -53,6 +68,8 @@ export default {
             showPopup: false,
             username: "",
             password: "",
+            message: "",
+            errors: [],
         };
     },
 
@@ -80,6 +97,35 @@ export default {
         openForgetPasswordPopup() {
             this.$refs.forgetPasswordPopup.openPopupForgetPassword();
         },
+
+        login() {
+            axios.post('http://127.0.0.1:8000/api/login', { username: this.username, password: this.password })
+            .then(res => {
+                const { user, role } = res.data;
+                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('role', role);
+                this.$emit('logged-in');
+                this.closePopup();
+
+                if (role === 1) {
+                    this.$router.push('/admin');
+                    message.success('Chào mừng đến với trang quản trị');
+                }else {
+                    message.success('Đăng nhập thành công');
+                    this.username = '';
+                    this.password = '';
+                }
+            })
+            .catch(err => {
+                if (err.response) {
+                    this.message = err.response.data.message;
+                }
+                if (err.response && err.response.data && err.response.data.errors) {
+                    this.errors = err.response.data.errors;
+                    message.warning('Đăng nhập không thành công');
+                }
+            })
+        }
     },
 };
 </script>
@@ -162,25 +208,6 @@ input {
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
-}
-
-.form-actions {
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-}
-
-button:hover {
-    opacity: 0.8;
 }
 
 .register-link {

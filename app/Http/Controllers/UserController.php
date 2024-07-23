@@ -74,19 +74,26 @@ class UserController extends Controller
             'password.confirmed'=> 'Xác nhận mật khẩu không đúng',
         ]);
 
+        if ($request->hasFile('avatar')) {
+            foreach ($request->file('avatar') as $file) {
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('public/uploads/users', $fileName);
+            }
+        }
         // C1
-        $users = $request->except('password_confimation');
-        User::create($users);
+        // $users = $request->except('password_confimation');
+        // User::create($users);
 
         // C2
-        // User::create([
-        //     'status_id' => $request['status_id'],
-        //     'username' => $request['username'],
-        //     'name' => $request['name'],
-        //     'email' => $request['email'],
-        //     'department_id' => $request['department_id'],
-        //     'password'=> $request['password'],
-        // ]);
+        User::create([
+            'status_id' => $request['status_id'],
+            'username' => $request['username'],
+            'avatar' => json_encode($fileName),
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'department_id' => $request['department_id'],
+            'password'=> $request['password'],
+        ]);
     }
 
     /**

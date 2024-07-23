@@ -63,6 +63,7 @@ import { message } from "ant-design-vue";
 import { useMenu } from "../../../storePinia/storeMenu.js";
 import axios from "axios";
 import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 export default defineComponent({
     setup() {
         useMenu().onSelectedKeys(["admin-news"]);
@@ -70,6 +71,7 @@ export default defineComponent({
         const detailNews = ref([]);
         const idNew = ref("");
         const route = useRoute();
+        const router = useRouter();
         const columns = [
             {
                 title: "#",
@@ -100,8 +102,9 @@ export default defineComponent({
                     detailNews.value = res.data;
                     idNew.value = res.data.new_id;
                 })
-                .catch((err) => {
-                    console.log(err);
+                .catch(() => {
+                    router.push('/');
+                    message.warning("Bạn cần có tài khoản quản trị để có thể truy cập vào trang này?");
                 });
         };
 

@@ -9,43 +9,51 @@
                 <h2>Đăng ký</h2>
                 <form @submit.prevent="register">
                     <div class="form-group">
-                        <label for="username">Tên đăng nhập:</label>
+                        <label for="username">
+                            <span :class="{ 'text-danger': errors.username }">Tên đăng nhập:</span>
+                        </label>
                         <input
                             type="text"
                             id="username"
                             v-model="username"
-                            required
-                        />
+                        /><br>
+                        <small v-if="errors.username" class="text-danger">{{ errors.username[0] }}</small>
                     </div>
                     <div class="form-group">
-                        <label for="username">Email:</label>
+                        <label for="username">
+                            <span :class="{ 'text-danger': errors.email }">Email:</span>
+                        </label>
                         <input
                             type="email"
                             id="email"
                             v-model="email"
-                            required
-                        />
+                        /><br>
+                        <small v-if="errors.email" class="text-danger">{{ errors.email[0] }}</small>
                     </div>
                     <div class="form-group">
-                        <label for="password">Mật khẩu:</label>
+                        <label for="password">
+                            <span :class="{ 'text-danger': errors.password }">Mật khẩu:</span>
+                        </label>
                         <input
                             type="password"
                             id="password"
                             v-model="password"
-                            required
-                        />
+                        /><br>
+                        <small v-if="errors.password" class="text-danger">{{ errors.password[0] }}</small>
                     </div>
                     <div class="form-group">
-                        <label for="password">Xác nhận mật khẩu:</label>
+                        <label for="password">
+                            <span :class="{ 'text-danger': errors.password_confirmation }">Xác nhận mật khẩu:</span>
+                        </label>
                         <input
                             type="password"
                             id="password_confirmation"
                             v-model="password_confirmation"
-                            required
-                        />
+                        /><br>
+                        <small v-if="errors.password_confirmation" class="text-danger">{{ errors.password_confirmation[0] }}</small>
                     </div>
-                    <div class="form-actions">
-                        <button type="submit">Đăng ký</button>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <a-button html-type="submit">Đăng ký</a-button>
                     </div>
                 </form>
             </div>
@@ -54,6 +62,8 @@
 </template>
 
 <script>
+import { message } from 'ant-design-vue';
+import axios from "axios";
 export default {
     data() {
         return {
@@ -61,7 +71,8 @@ export default {
             username: "",
             email: "",
             password: "",
-            password_confirmation: ""
+            password_confirmation: "",
+            errors: [],
         };
     },
     methods: {
@@ -71,8 +82,33 @@ export default {
                 this.closePopupRegister();
             }
         },
+
         closePopupRegister() {
             this.showPopup = false;
+        },
+
+        register() {
+            const newUser = {
+                username: this.username,
+                email: this.email,
+                password: this.password,
+                password_confirmation: this.password_confirmation
+            };
+            axios.post('http://127.0.0.1:8000/api/register', newUser)
+            .then(res => {
+                message.success(res.data.message);
+                this.closePopupRegister();
+                this.username = '';
+                this.email = '';
+                this.password = '';
+                this.password_confirmation = '';
+            })
+            .catch(err => {
+                if (err.response && err.response.data && err.response.data.errors) {
+                    this.errors = err.response.data.errors
+                    message.warning('Tạo mới không thành công');
+                }
+            })
         },
     },
 };
@@ -156,24 +192,5 @@ input {
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
-}
-
-.form-actions {
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-}
-
-button:hover {
-    opacity: 0.8;
 }
 </style>

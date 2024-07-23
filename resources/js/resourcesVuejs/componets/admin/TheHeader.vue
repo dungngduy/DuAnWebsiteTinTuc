@@ -26,10 +26,8 @@
             <div
                 class="col-sm-3 d-none d-sm-flex align-items-center justify-content-sm-end"
             >
-                <span class="me-3">Admin</span>
-                <router-link :to="'/'">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                </router-link>
+                <span v-if="userName" class="me-3">{{ userName }}</span>
+                <a-button @click="logout"><i class="fa-solid fa-right-from-bracket"></i></a-button>
             </div>
 
             <div
@@ -62,8 +60,10 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router';
 import TheMenu from '../admin/TheMenu.vue';
 import { defineComponent, ref } from 'vue';
+import { message } from 'ant-design-vue';
 export default defineComponent ({
     components: {
         TheMenu
@@ -71,6 +71,7 @@ export default defineComponent ({
     setup(){
         const openCategories = ref(false);
         const openUser = ref(false);
+        const router = useRouter();
 
         const showDrawerCategories = () => {
             openCategories.value = true;
@@ -79,11 +80,30 @@ export default defineComponent ({
             openUser.value = true;
         };
 
+        const userData = localStorage.getItem('user');
+        const user = JSON.parse(userData);
+        const userName = user.name;
+
+        const logout = () => {
+            axios.post('http://127.0.0.1:8000/api/logout')
+            .then(response => {
+                localStorage.removeItem('user');
+                localStorage.removeItem('role');
+                router.push('/');
+                message.success(response.data.message);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
+
         return {
             openCategories,
             openUser,
             showDrawerCategories,
-            showDrawerUser
+            showDrawerUser,
+            logout,
+            userName,
         };
     }
 })
