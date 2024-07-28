@@ -146,3 +146,9 @@ exit($status);
 
 // Khi đi làm hiệu suất chức năng phải nhanh
 // Phải tiết kiệm được bộ nhớ
+
+// Đầu việc cần làm ngày mai
+
+// Đổ bài viết ra các trang
+// Hoàn thành chức năng bình luận
+// Phân trang các bài viết gần đây ở phần cuối trang index (làm cuối)

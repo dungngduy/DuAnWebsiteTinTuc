@@ -6,6 +6,8 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DetailNewController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\client\CategoriesController as ClientCategoriesController;
+use App\Http\Controllers\Client\IndexController;
 use App\Http\Controllers\Login\LoginController;
 use App\Http\Controllers\Login\RegisterController;
 
@@ -91,3 +93,16 @@ Route::post('/register', [RegisterController::class,'store']);
 // Login
 Route::post('/login', [LoginController::class,'index']);
 Route::post('/logout', [LoginController::class,'logout']);
+
+// Index
+Route::get('getTrendingTopNews', [IndexController::class,'getTrendingTopNews']);
+Route::get('getTrendingBottomNews', [IndexController::class,'getTrendingBottomNews']);
+Route::get('getTrendingRightNews', [IndexController::class,'getTrendingRightNews']);
+Route::get('getPopularOnWeekNews', [IndexController::class,'getPopularOnWeekNews']);
+Route::get('getCategoriesNewsHomeTab', [IndexController::class,'getCategoriesNewsHomeTab']);
+Route::get('getCategoriesNews', [IndexController::class,'getCategoriesNews']);
+
+
+// Categories
+Route::get('getAllNews', [ClientCategoriesController::class,'getAllNews']);
+Route::get('getAllCategories', [ClientCategoriesController::class,'getAllCategories']);

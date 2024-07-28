@@ -22,6 +22,7 @@ import '../../node_modules/bootstrap/dist/css/bootstrap-utilities.min.css';
 // ant-design-vue
 import 'ant-design-vue/dist/reset.css';
 import {
+    Pagination,
     Form,
     Upload,
     Checkbox,
@@ -56,6 +57,7 @@ app.use(Button)
     .use(Checkbox)
     .use(Upload)
     .use(Form)
+    .use(Pagination)
     .mount('#app');
 
 app.config.globalProperties.$message = message;

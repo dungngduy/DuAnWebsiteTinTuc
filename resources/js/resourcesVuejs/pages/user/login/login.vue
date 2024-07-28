@@ -111,9 +111,8 @@ export default {
                     this.$router.push('/admin');
                     message.success('Chào mừng đến với trang quản trị');
                 }else {
+                    window.location.reload();
                     message.success('Đăng nhập thành công');
-                    this.username = '';
-                    this.password = '';
                 }
             })
             .catch(err => {

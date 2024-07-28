@@ -61,10 +61,10 @@
                                                 type="email"
                                                 name="email"
                                                 id="newsletter-form-email"
-                                                placeholder="Email Address"
+                                                placeholder="Email"
                                                 class="placeholder hide-on-focus"
                                                 onfocus="this.placeholder = ''"
-                                                onblur="this.placeholder = ' Email Address '"
+                                                onblur="this.placeholder = ' Email '"
                                             />
                                             <div class="form-icon">
                                                 <button

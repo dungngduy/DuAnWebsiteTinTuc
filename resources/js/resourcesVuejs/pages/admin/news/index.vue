@@ -15,6 +15,8 @@
                     :columns="columns"
                     :data-source="news"
                     :scroll="{ x: 576 }"
+                    :pagination="paginationConfig"
+                    @change="handleTableChange"
                 >
                     <template #bodyCell="{ column, index, record }">
                         <template v-if="column.key === 'index'">
@@ -69,11 +71,13 @@ import { message } from "ant-design-vue";
 import { useRouter } from "vue-router";
 import { useMenu } from "../../../storePinia/storeMenu.js";
 import axios from "axios";
+import { paginationConfig } from "ant-design-vue/es/pagination/Pagination.js";
 export default defineComponent({
     setup() {
         useMenu().onSelectedKeys(["admin-news"]);
 
         const news = ref([]);
+        const totalNew = ref("");
         const router = useRouter();
         const columns = [
             {
@@ -119,12 +123,13 @@ export default defineComponent({
             axios
                 .get("http://127.0.0.1:8000/api/news")
                 .then((res) => {
-                    const processedNews = res.data.map(item => ({
+                    const processedNews = res.data.news.map(item => ({
                         ...item,
                         image: item.image.replace(/"/g, '')
                     }));
 
                     news.value = processedNews;
+                    totalNew.value = res.data.totalNew;
                 })
                 .catch(() => {
                     router.push('/');
@@ -158,11 +163,43 @@ export default defineComponent({
             });
         };
 
+        const paginationConfig = ref({
+            current: 1,
+            pageSize: 3,
+            total: totalNew,
+            showTotal: (total) => `Tổng ${total} bài viết`,
+            showLessItems: true, // Hiển thị ít mục hơn trong phân trang để có dấu ba chấm
+        });
+
+        const handleTableChange = (pagination) => {
+            paginationConfig.value.current = pagination.current;
+            paginationConfig.value.pageSize = pagination.pageSize;
+        };
+
         return {
             news,
             columns,
             deleteNews,
+            paginationConfig,
+            handleTableChange,
         };
     },
 });
 </script>
+
+<style>
+th.column-index,
+td.column-index,
+th.column-title,
+td.column-title,
+th.column-image,
+td.column-image,
+th.column-des,
+td.column-des,
+th.column-cate,
+td.column-cate,
+th.column-action,
+td.column-action {
+  text-align: center !important;
+}
+</style>

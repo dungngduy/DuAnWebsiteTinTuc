@@ -25,7 +25,13 @@ class NewsController extends Controller
                 'user_status.name as status_name'
             )
             ->get();
-        return response()->json($news);
+        $totalNew = DB::table('news')
+            ->selectRaw('COUNT(*) as totalNew')
+            ->first();
+        return response()->json([
+            'news' => $news,
+            'totalNew' => $totalNew,
+        ]);
     }
 
     /**
@@ -141,50 +147,6 @@ class NewsController extends Controller
             'status_new' => $request['status_new'],
         ]);
     }
-
-    // public function update(Request $request, $id)
-    // {
-    //     $request->validate([
-    //         'title_new' => 'sometimes|required|string',
-    //         'image' => 'image|mimes:jpeg,png,jpg|max:2048',
-    //         'short_content' => 'sometimes|required|string',
-    //         'category_id' => 'sometimes|required|exists:categories,id',
-    //         'status_new' => 'sometimes|required',
-    //     ], [
-    //         'title_new.required' => 'Vui lòng nhập tiêu đề bài viết.',
-    //         'image.image' => 'Tệp tải lên không phải là hình ảnh.',
-    //         'image.mimes' => 'Chỉ chấp nhận các định dạng JPG, PNG, JPEG.',
-    //         'image.max' => 'Dung lượng tối đa cho mỗi ảnh là 2MB.',
-    //         'short_content.required' => 'Vui lòng nhập đoạn tóm tắt bài viết.',
-    //         'category_id.required' => 'Vui lòng chọn danh mục bài viết.',
-    //         'category_id.exists' => 'Danh mục bài viết không hợp lệ.',
-    //         'status_new.required' => 'Vui lòng chọn trạng thái bài viết.',
-    //     ]);
-
-    //     $news = News::findOrFail($id);
-
-    //     $fileName = $news->image;
-
-    //     if ($request->hasFile('image')) {
-    //         // Upload new image
-    //         $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
-    //         $request->file('image')->storeAs('public/uploads/news', $fileName);
-
-    //         // Delete old image if necessary, depending on your application logic
-    //         Storage::delete('public/uploads/news/' . $news->image);
-    //     }
-
-    //     // Update news article
-    //     $news->update([
-    //         'title_new' => $request->input('title_new'),
-    //         'image' => json_encode($fileName),
-    //         'short_content' => $request->input('short_content'),
-    //         'category_id' => $request->input('category_id'),
-    //         'status_new' => $request->input('status_new'),
-    //     ]);
-
-    //     Log::info('Request data:', $request->all());
-    // }
 
     /**
      * Remove the specified resource from storage.

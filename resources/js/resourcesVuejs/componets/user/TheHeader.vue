@@ -73,7 +73,7 @@
                             <!-- Logo -->
                             <div class="col-xl-3 col-lg-3 col-md-3">
                                 <div class="logo">
-                                    <a href="index.html"
+                                    <a href="/"
                                         ><img
                                             src="assets/img/logo/logo.png"
                                             alt=""
@@ -257,7 +257,7 @@
                             <!-- Logo -->
                             <div class="col-xl-3 col-lg-3 col-md-3">
                                 <div class="logo">
-                                    <a href="index.html"
+                                    <a href="/"
                                         ><img
                                             src="assets/img/logo/logo.png"
                                             alt=""
@@ -297,7 +297,7 @@
                                                 <a href="/">Trang chủ</a>
                                             </li>
                                             <li>
-                                                <a href="about.html">Giới thiệu</a>
+                                                <a href="/gioi-thieu">Giới thiệu</a>
                                             </li>
                                             <li>
                                                 <a href="/danh-muc">Danh mục bài viết</a>
@@ -331,7 +331,7 @@
                                                 >
                                             </li>
                                             <li>
-                                                <a href="contact.html"
+                                                <a href="/lien-he"
                                                     >Liên hệ</a
                                                 >
                                             </li>

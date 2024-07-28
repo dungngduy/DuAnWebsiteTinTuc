@@ -10,6 +10,20 @@ const user = [
                 component: () => import('../pages/user/index.vue'),
             },
 
+            // About
+            {
+                path: "/gioi-thieu",
+                name: "gioi-thieu",
+                component: () => import('../pages/user/about.vue'),
+            },
+
+            // Contact
+            {
+                path: "/lien-he",
+                name: "lien-he",
+                component: () => import('../pages/user/contact.vue'),
+            },
+
             // Categories
             {
                 path: "/danh-muc",
@@ -29,6 +43,18 @@ const user = [
                 path: "/thong-tin-nguoi-dung",
                 name: "thong-tin-nguoi-dung",
                 component: () => import('../pages/user/login/info-user.vue'),
+            },
+
+            {
+                path: "/bai-viet-da-luu",
+                name: "bai-viet-da-luu",
+                component: () => import('../pages/user/storage/new-storage.vue'),
+            },
+
+            {
+                path: "/bai-viet-da-xem",
+                name: "bai-viet-da-xem",
+                component: () => import('../pages/user/storage/new-watched.vue'),
             },
         ]
     }

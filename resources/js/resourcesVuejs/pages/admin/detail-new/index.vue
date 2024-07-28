@@ -143,3 +143,12 @@ export default defineComponent({
     },
 });
 </script>
+
+<style>
+th.column-index,
+td.column-index,
+th.column-action,
+td.column-action {
+  text-align: center !important;
+}
+</style>

@@ -271,8 +271,8 @@ export default defineComponent({
         function format(inputDate) {
             var date = new Date(inputDate);
             if (!isNaN(date.getTime())) {
-                var formattedDate = ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + '-' +
-                                    (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + '-' +
+                var formattedDate = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + '-' +
+                                    ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + '-' +
                                     date.getFullYear() + ' ' +
                                     (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':' +
                                     (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':' +
