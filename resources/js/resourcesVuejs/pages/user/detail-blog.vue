@@ -4,23 +4,22 @@
             <div class="row">
                 <div class="col-lg-8 posts-list">
                     <div class="single-post">
-                        <div class="feature-img">
+                        <div v-if="news" class="feature-img">
                             <img
                                 class="img-fluid"
-                                src="assets/img/blog/single_blog_1.png"
+                                :src="`/storage/uploads/news/${news.image}`"
                                 alt=""
+                                style="width: 830px; height: 480px;"
                             />
                         </div>
                         <div class="blog_details">
                             <h2>
-                                Second divided from form fish beast made every
-                                of seas all gathered us saying he our
+                                {{ news.title_new }}
                             </h2>
-                            <ul class="blog-info-link mt-3 mb-4">
+                            <ul v-if="cateOfNew" class="blog-info-link mt-3 mb-4">
                                 <li>
                                     <a href="#"
-                                        ><i class="fa fa-user"></i> Travel,
-                                        Lifestyle</a
+                                        ><i class="fa-solid fa-layer-group"></i> {{ cateOfNew.title }}</a
                                     >
                                 </li>
                                 <li>
@@ -30,53 +29,8 @@
                                     >
                                 </li>
                             </ul>
-                            <p class="excert">
-                                MCSE boot camps have its supporters and its
-                                detractors. Some people do not understand why
-                                you should have to spend money on boot camp when
-                                you can get the MCSE study materials yourself at
-                                a fraction of the camp price. However, who has
-                                the willpower
-                            </p>
-                            <p>
-                                MCSE boot camps have its supporters and its
-                                detractors. Some people do not understand why
-                                you should have to spend money on boot camp when
-                                you can get the MCSE study materials yourself at
-                                a fraction of the camp price. However, who has
-                                the willpower to actually sit through a
-                                self-imposed MCSE training. who has the
-                                willpower to actually
-                            </p>
-                            <div class="quote-wrapper">
-                                <div class="quotes">
-                                    MCSE boot camps have its supporters and its
-                                    detractors. Some people do not understand
-                                    why you should have to spend money on boot
-                                    camp when you can get the MCSE study
-                                    materials yourself at a fraction of the camp
-                                    price. However, who has the willpower to
-                                    actually sit through a self-imposed MCSE
-                                    training.
-                                </div>
-                            </div>
-                            <p>
-                                MCSE boot camps have its supporters and its
-                                detractors. Some people do not understand why
-                                you should have to spend money on boot camp when
-                                you can get the MCSE study materials yourself at
-                                a fraction of the camp price. However, who has
-                                the willpower
-                            </p>
-                            <p>
-                                MCSE boot camps have its supporters and its
-                                detractors. Some people do not understand why
-                                you should have to spend money on boot camp when
-                                you can get the MCSE study materials yourself at
-                                a fraction of the camp price. However, who has
-                                the willpower to actually sit through a
-                                self-imposed MCSE training. who has the
-                                willpower to actually
+                            <p v-for="detail in detailNew" class="excert">
+                                {{ detail.main_content }}
                             </p>
                         </div>
                     </div>
@@ -108,22 +62,6 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="blog-author">
-                        <div class="media align-items-center">
-                            <img src="assets/img/blog/author.png" alt="" />
-                            <div class="media-body">
-                                <a href="#">
-                                    <h4>Harvard milan</h4>
-                                </a>
-                                <p>
-                                    Second divided from form fish beast made.
-                                    Every of seas all gathered use saying
-                                    you're, he our dominion twon Second divided
-                                    from
-                                </p>
-                            </div>
-                        </div>
-                    </div>
                     <div class="comments-area">
                         <h4>05 Comments</h4>
                         <div class="comment-list">
@@ -135,7 +73,7 @@
                                 >
                                     <div class="thumb">
                                         <img
-                                            src="assets/img/comment/comment_1.png"
+                                            src="/assets/img/comment/comment_1.png"
                                             alt=""
                                         />
                                     </div>
@@ -181,7 +119,7 @@
                                 >
                                     <div class="thumb">
                                         <img
-                                            src="assets/img/comment/comment_2.png"
+                                            src="/assets/img/comment/comment_2.png"
                                             alt=""
                                         />
                                     </div>
@@ -227,7 +165,7 @@
                                 >
                                     <div class="thumb">
                                         <img
-                                            src="assets/img/comment/comment_3.png"
+                                            src="/assets/img/comment/comment_3.png"
                                             alt=""
                                         />
                                     </div>
@@ -266,7 +204,7 @@
                         </div>
                     </div>
                     <div class="comment-form">
-                        <h4>Leave a Reply</h4>
+                        <h4>Bình luận</h4>
                         <form
                             class="form-contact comment_form"
                             action="#"
@@ -281,7 +219,7 @@
                                             id="comment"
                                             cols="30"
                                             rows="9"
-                                            placeholder="Write Comment"
+                                            placeholder="Bình luận bài viết"
                                         ></textarea>
                                     </div>
                                 </div>
@@ -291,7 +229,7 @@
                                     type="submit"
                                     class="button button-contactForm btn_1 boxed-btn"
                                 >
-                                    Send Message
+                                    Gửi bình luận
                                 </button>
                             </div>
                         </form>
@@ -299,136 +237,34 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="blog_right_sidebar">
-                        <aside class="single_sidebar_widget search_widget">
-                            <form action="#">
-                                <div class="form-group">
-                                    <div class="input-group mb-3">
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            placeholder="Search Keyword"
-                                            onfocus="this.placeholder = ''"
-                                            onblur="this.placeholder = 'Search Keyword'"
-                                        />
-                                        <div class="input-group-append">
-                                            <button class="btns" type="button">
-                                                <i class="ti-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button
-                                    class="button rounded-0 primary-bg w-100 btn_1 boxed-btn"
-                                    type="submit"
-                                >
-                                    Search
-                                </button>
-                            </form>
-                        </aside>
-                        <aside
-                            class="single_sidebar_widget post_category_widget"
-                        >
-                            <h4 class="widget_title">Category</h4>
-                            <ul class="list cat-list">
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>Resaurant food</p>
-                                        <p>(37)</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>Travel news</p>
-                                        <p>(10)</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>Modern technology</p>
-                                        <p>(03)</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>Product</p>
-                                        <p>(11)</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>Inspiration</p>
-                                        <p>(21)</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="d-flex">
-                                        <p>Health Care</p>
-                                        <p>(21)</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </aside>
                         <aside
                             class="single_sidebar_widget popular_post_widget"
                         >
-                            <h3 class="widget_title">Recent Post</h3>
-                            <div class="media post_item">
+                            <h3 class="widget_title">Bài viết gần đây</h3>
+                            <div v-for="(item, index) in newsRecent" :key="index" class="media post_item">
                                 <img
-                                    src="assets/img/post/post_1.png"
+                                    :src="`/storage/uploads/news/${item.image}`"
                                     alt="post"
+                                    style="width: 80px; height: 80px; object-fit: cover;"
                                 />
                                 <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>From life was you fish...</h3>
+                                    <a href="#">
+                                        <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">
+                                            <h3>{{ item.title_new }}</h3>
+                                        </router-link>
                                     </a>
-                                    <p>January 12, 2019</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img
-                                    src="assets/img/post/post_2.png"
-                                    alt="post"
-                                />
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>The Amazing Hubble</h3>
-                                    </a>
-                                    <p>02 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img
-                                    src="assets/img/post/post_3.png"
-                                    alt="post"
-                                />
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>Astronomy Or Astrology</h3>
-                                    </a>
-                                    <p>03 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img
-                                    src="assets/img/post/post_4.png"
-                                    alt="post"
-                                />
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>Asteroids telescope</h3>
-                                    </a>
-                                    <p>01 Hours ago</p>
+                                    <p>{{ format(item.created_at) }}</p>
                                 </div>
                             </div>
                         </aside>
                         <aside class="single_sidebar_widget instagram_feeds">
-                            <h4 class="widget_title">Instagram Feeds</h4>
+                            <h4 class="widget_title">Bảng tin Instagram</h4>
                             <ul class="instagram_row flex-wrap">
                                 <li>
                                     <a href="#">
                                         <img
                                             class="img-fluid"
-                                            src="assets/img/post/post_5.png"
+                                            src="/assets/img/post/post_5.png"
                                             alt=""
                                         />
                                     </a>
@@ -437,7 +273,7 @@
                                     <a href="#">
                                         <img
                                             class="img-fluid"
-                                            src="assets/img/post/post_6.png"
+                                            src="/assets/img/post/post_6.png"
                                             alt=""
                                         />
                                     </a>
@@ -446,7 +282,7 @@
                                     <a href="#">
                                         <img
                                             class="img-fluid"
-                                            src="assets/img/post/post_7.png"
+                                            src="/assets/img/post/post_7.png"
                                             alt=""
                                         />
                                     </a>
@@ -455,7 +291,7 @@
                                     <a href="#">
                                         <img
                                             class="img-fluid"
-                                            src="assets/img/post/post_8.png"
+                                            src="/assets/img/post/post_8.png"
                                             alt=""
                                         />
                                     </a>
@@ -464,7 +300,7 @@
                                     <a href="#">
                                         <img
                                             class="img-fluid"
-                                            src="assets/img/post/post_9.png"
+                                            src="/assets/img/post/post_9.png"
                                             alt=""
                                         />
                                     </a>
@@ -473,33 +309,12 @@
                                     <a href="#">
                                         <img
                                             class="img-fluid"
-                                            src="assets/img/post/post_10.png"
+                                            src="/assets/img/post/post_10.png"
                                             alt=""
                                         />
                                     </a>
                                 </li>
                             </ul>
-                        </aside>
-                        <aside class="single_sidebar_widget newsletter_widget">
-                            <h4 class="widget_title">Newsletter</h4>
-                            <form action="#">
-                                <div class="form-group">
-                                    <input
-                                        type="email"
-                                        class="form-control"
-                                        onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Enter email'"
-                                        placeholder="Enter email"
-                                        required
-                                    />
-                                </div>
-                                <button
-                                    class="button rounded-0 primary-bg w-100 btn_1 boxed-btn"
-                                    type="submit"
-                                >
-                                    Subscribe
-                                </button>
-                            </form>
                         </aside>
                     </div>
                 </div>
@@ -507,3 +322,92 @@
         </div>
     </section>
 </template>
+
+<script>
+import { ref, defineComponent, watch } from 'vue';
+import axios from 'axios';
+import { useRoute } from 'vue-router';
+
+export default defineComponent({
+    setup(){
+        const route = useRoute();
+        const news = ref([]);
+        const cateOfNew = ref([]);
+        const detailNew = ref([]);
+        const categories = ref([]);
+        const newsRecent = ref([]);
+
+        const getAllCategories = () => {
+            axios.get(`http://127.0.0.1:8000/api/getAllCategories`)
+            .then(res => {
+                categories.value = res.data;
+            })
+            .catch(errors => {
+                console.log(errors);
+            });
+        }
+
+        const getRecentNews = () => {
+            axios.get(`http://127.0.0.1:8000/api/getNewsRecent`)
+            .then(res => {
+                const processedNews = res.data.map(item => ({
+                    ...item,
+                    image: item.image.replace(/"/g, '')
+                }));
+
+                newsRecent.value = processedNews;
+            })
+            .catch(errors => {
+                console.log(errors);
+            });
+        }
+
+        const getDetailNew = (idNew) => {
+            axios.get(`http://127.0.0.1:8000/api/getDetailNew/${idNew}`)
+            .then(res => {
+                if(res.data.new.image) {
+                    res.data.new.image = res.data.new.image.replace(/"/g, '');
+                }
+                news.value = res.data.new;
+                detailNew.value = res.data.detailNew;
+                cateOfNew.value = res.data.new.category;
+            })
+            .catch(errors => {
+                console.log(errors);
+            });
+        }
+
+        watch(route, (newRoute) => {
+            const idNew = newRoute.params.id;
+            getDetailNew(idNew);
+        });
+
+        function format(inputDate) {
+            var date = new Date(inputDate);
+            if (!isNaN(date.getTime())) {
+                var formattedDate = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + '/' +
+                                    ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + '/' +
+                                    date.getFullYear();
+
+                return formattedDate;
+            } else {
+                return 'Invalid Date';
+            }
+        }
+
+        getAllCategories();
+        getRecentNews();
+        getDetailNew(route.params.id);
+
+        return {
+            news,
+            detailNew,
+            cateOfNew,
+            format,
+
+            categories,
+            newsRecent,
+        }
+    }
+})
+</script>

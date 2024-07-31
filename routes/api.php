@@ -4,8 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\DetailNewController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\DetailNewController;
+use App\Http\Controllers\client\DetailNewController as ClientDetailNewController;
 use App\Http\Controllers\client\CategoriesController as ClientCategoriesController;
 use App\Http\Controllers\Client\IndexController;
 use App\Http\Controllers\Login\LoginController;
@@ -106,3 +107,7 @@ Route::get('getCategoriesNews', [IndexController::class,'getCategoriesNews']);
 // Categories
 Route::get('getAllNews', [ClientCategoriesController::class,'getAllNews']);
 Route::get('getAllCategories', [ClientCategoriesController::class,'getAllCategories']);
+Route::get('getNewsRecent', [ClientCategoriesController::class,'getNewsRecent']);
+
+// DetailNew
+Route::get('getDetailNew/{id}', [ClientDetailNewController::class,'getDetailNew']);

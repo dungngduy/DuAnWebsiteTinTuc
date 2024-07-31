@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mb-5 mb-lg-0">
-                    <div class="blog_left_sidebar">
+                    <div v-if="news.length" class="blog_left_sidebar">
                         <article v-for="(item, index) in news" :key="index" class="blog_item">
                             <div class="blog_item_img">
                                 <img
@@ -12,31 +12,36 @@
                                     alt=""
                                 />
                                 <a href="#" class="blog_item_date">
-                                    <p>{{ format(item.created_at) }}</p>
+                                    <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">
+                                        <p>{{ format(item.created_at) }}</p>
+                                    </router-link>
                                 </a>
                             </div>
 
                             <div class="blog_details">
                                 <a
                                     class="d-inline-block"
-                                    href="single-blog.html"
+                                    href="#"
                                 >
-                                    <h2>
-                                        {{ item.title_new }}
-                                    </h2>
+                                    <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">
+                                        <h2>{{ item.title_new }}</h2>
+                                    </router-link>
                                 </a>
                                 <p>
                                     {{ item.short_content }}
                                 </p>
                                 <ul class="blog-info-link">
                                     <li>
-                                        <a href="#"><i class="fa-solid fa-layer-group"></i> {{ item.title }}</a>
+                                        <a href="#">
+                                            <i class="fa-solid fa-layer-group"></i>
+                                            <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">{{ item.title }}</router-link>
+                                        </a>
                                     </li>
                                     <li>
-                                        <a href="#"
-                                            ><i class="fa fa-comments"></i> 03
-                                            Comments</a
-                                        >
+                                        <a href="#">
+                                            <i class="fa fa-comments"></i>
+                                            <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">03 Comments</router-link>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -92,7 +97,7 @@
                             <h4 class="widget_title">Danh mục bài viết</h4>
                             <ul class="list cat-list">
                                 <li v-for="category in categories" :key="category.id">
-                                    <a href="#" class="d-flex">
+                                    <a href="#" class="d-flex" @click.prevent="searchProductsByCategory(category.id)">
                                         <p class="me-1">{{ category.title }}</p>
                                         <p>({{ category.new_count }})</p>
                                     </a>
@@ -104,52 +109,19 @@
                             class="single_sidebar_widget popular_post_widget"
                         >
                             <h3 class="widget_title">Bài viết gần đây</h3>
-                            <div class="media post_item">
+                            <div v-for="(item, index) in newsRecent" :key="index" class="media post_item">
                                 <img
-                                    src="assets/img/post/post_1.png"
+                                    :src="`/storage/uploads/news/${item.image}`"
                                     alt="post"
+                                    style="width: 80px; height: 80px; object-fit: cover;"
                                 />
                                 <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>From life was you fish...</h3>
+                                    <a href="#">
+                                        <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">
+                                            <h3>{{ item.title_new }}</h3>
+                                        </router-link>
                                     </a>
-                                    <p>January 12, 2019</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img
-                                    src="assets/img/post/post_2.png"
-                                    alt="post"
-                                />
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>The Amazing Hubble</h3>
-                                    </a>
-                                    <p>02 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img
-                                    src="assets/img/post/post_3.png"
-                                    alt="post"
-                                />
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>Astronomy Or Astrology</h3>
-                                    </a>
-                                    <p>03 Hours ago</p>
-                                </div>
-                            </div>
-                            <div class="media post_item">
-                                <img
-                                    src="assets/img/post/post_4.png"
-                                    alt="post"
-                                />
-                                <div class="media-body">
-                                    <a href="single-blog.html">
-                                        <h3>Asteroids telescope</h3>
-                                    </a>
-                                    <p>01 Hours ago</p>
+                                    <p>{{ format(item.created_at) }}</p>
                                 </div>
                             </div>
                         </aside>
@@ -254,12 +226,15 @@ export default defineComponent({
         const pageSize = ref(4);
         const current = ref(1);
         const categories = ref([]);
+        const selectedCategory = ref(null);
+        const newsRecent = ref([]);
 
-        const getAllNews = (page, pageSize) => {
+        const getAllNews = (page, pageSize, category_id = null) => {
             axios.get(`http://127.0.0.1:8000/api/getAllNews`, {
                 params: {
                     page: page,
-                    pageSize: pageSize
+                    pageSize: pageSize,
+                    category_id: category_id
                 }
             })
             .then(res => {
@@ -286,6 +261,21 @@ export default defineComponent({
             });
         }
 
+        const getRecentNews = () => {
+            axios.get(`http://127.0.0.1:8000/api/getNewsRecent`)
+            .then(res => {
+                const processedNews = res.data.map(item => ({
+                    ...item,
+                    image: item.image.replace(/"/g, '')
+                }));
+
+                newsRecent.value = processedNews;
+            })
+            .catch(errors => {
+                console.log(errors);
+            });
+        }
+
         function format(inputDate) {
             var date = new Date(inputDate);
             if (!isNaN(date.getTime())) {
@@ -299,18 +289,25 @@ export default defineComponent({
             }
         }
 
+        const searchProductsByCategory = (categoryId) => {
+            selectedCategory.value = categoryId;
+            current.value = 1;
+            getAllNews(1, pageSize.value, categoryId);
+        };
+
         const handlePageChange = (page) => {
             current.value = page;
-            getAllNews(page, pageSize.value); // Cập nhật danh sách bài viết khi thay đổi trang
+            getAllNews(page, pageSize.value, selectedCategory.value); // Cập nhật danh sách bài viết khi thay đổi trang
         };
 
         const handlePageSizeChange = (current, size) => {
             pageSize.value = size;
-            getAllNews(current, size); // Cập nhật danh sách bài viết khi thay đổi kích thước trang
+            getAllNews(current, size, selectedCategory.value); // Cập nhật danh sách bài viết khi thay đổi kích thước trang
         };
 
-        getAllNews(current.value, pageSize.value);
+        getAllNews();
         getAllCategories();
+        getRecentNews();
 
         return {
             news,
@@ -320,8 +317,10 @@ export default defineComponent({
             totalNew,
             handlePageChange,
             handlePageSizeChange,
+            searchProductsByCategory,
 
             categories,
+            newsRecent,
         }
     }
 })

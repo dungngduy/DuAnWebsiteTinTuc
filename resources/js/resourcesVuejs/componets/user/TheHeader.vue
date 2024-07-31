@@ -75,7 +75,7 @@
                                 <div class="logo">
                                     <a href="/"
                                         ><img
-                                            src="assets/img/logo/logo.png"
+                                            src="/assets/img/logo/logo.png"
                                             alt=""
                                     /></a>
                                 </div>
@@ -83,7 +83,7 @@
                             <div class="col-xl-9 col-lg-9 col-md-9">
                                 <div class="header-banner f-right">
                                     <img
-                                        src="assets/img/hero/header_card.jpg"
+                                        src="/assets/img/hero/header_card.jpg"
                                         alt=""
                                     />
                                 </div>
@@ -102,7 +102,7 @@
                                 <div class="sticky-logo">
                                     <a href="/"
                                         ><img
-                                            src="assets/img/logo/logo.png"
+                                            src="/assets/img/logo/logo.png"
                                             alt=""
                                     /></a>
                                 </div>
@@ -114,31 +114,13 @@
                                                 <a href="/">Trang chủ</a>
                                             </li>
                                             <li>
-                                                <a href="about.html">Giới thiệu</a>
+                                                <a href="/gioi-thieu">Giới thiệu</a>
                                             </li>
                                             <li>
                                                 <a href="/danh-muc">Danh mục bài viết</a>
                                                 <ul class="submenu">
-                                                    <li>
-                                                        <a href="elements.html"
-                                                            >Element</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a href="blog.html"
-                                                            >Blog</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a
-                                                            href="single-blog.html"
-                                                            >Blog Details</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a href="details.html"
-                                                            >Categori Details</a
-                                                        >
+                                                    <li v-for="category in categories" :key="category.id">
+                                                        <router-link :to="`/danh-muc/${category.id}`">{{ category.title }}</router-link>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -259,7 +241,7 @@
                                 <div class="logo">
                                     <a href="/"
                                         ><img
-                                            src="assets/img/logo/logo.png"
+                                            src="/assets/img/logo/logo.png"
                                             alt=""
                                     /></a>
                                 </div>
@@ -267,7 +249,7 @@
                             <div class="col-xl-9 col-lg-9 col-md-9">
                                 <div class="header-banner f-right">
                                     <img
-                                        src="assets/img/hero/header_card.jpg"
+                                        src="/assets/img/hero/header_card.jpg"
                                         alt=""
                                     />
                                 </div>
@@ -285,7 +267,7 @@
                                 <div class="sticky-logo">
                                     <a href="/"
                                         ><img
-                                            src="assets/img/logo/logo.png"
+                                            src="/assets/img/logo/logo.png"
                                             alt=""
                                     /></a>
                                 </div>
@@ -302,26 +284,8 @@
                                             <li>
                                                 <a href="/danh-muc">Danh mục bài viết</a>
                                                 <ul class="submenu">
-                                                    <li>
-                                                        <a href="elements.html"
-                                                            >Element</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a href="blog.html"
-                                                            >Blog</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a
-                                                            href="single-blog.html"
-                                                            >Blog Details</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a href="details.html"
-                                                            >Categori Details</a
-                                                        >
+                                                    <li v-for="category in categories" :key="category.id">
+                                                        <router-link :to="`/danh-muc`">{{ category.title }}</router-link>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -375,11 +339,13 @@
 
 <script>
 import LoginPopup from "../../pages/user/login/login.vue";
+import { ref } from 'vue';
 
 export default {
     data() {
         return {
             user: null,
+            categories: ref([]),
         };
     },
     components: {
@@ -402,10 +368,21 @@ export default {
                 this.user = userInfo;
 
             }
+        },
+
+        getAllCategories() {
+            axios.get(`http://127.0.0.1:8000/api/getAllCategories`)
+            .then(res => {
+                this.categories = res.data;
+            })
+            .catch(errors => {
+                console.log(errors);
+            });
         }
     },
     mounted() {
         this.loadUser();
+        this.getAllCategories();
     }
 };
 </script>

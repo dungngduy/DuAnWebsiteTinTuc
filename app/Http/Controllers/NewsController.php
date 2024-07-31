@@ -123,6 +123,7 @@ class NewsController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // dd($request->all());
         $request->validate([
             'title_new' => 'required',
             // 'image' => 'required|min:1',
@@ -140,8 +141,19 @@ class NewsController extends Controller
             'status_new.required' => 'Vui lòng chọn trạng thái bài viết.',
         ]);
 
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $file) {
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('public/uploads/news', $fileName);
+                $fileNames = $fileName;
+            }
+        } else {
+            $fileNames = $request->input('imageExist');
+        }
+
         News::find($id)->update([
             'title_new' => $request['title_new'],
+            'image' => json_encode($fileNames),
             'short_content' => $request['short_content'],
             'category_id' => $request['category_id'],
             'status_new' => $request['status_new'],

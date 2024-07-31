@@ -33,7 +33,7 @@ const user = [
 
             // Detail-blog
             {
-                path: "/chi-tiet-bai-viet",
+                path: "/chi-tiet-bai-viet/:id",
                 name: "chi-tiet-bai-viet",
                 component: () => import('../pages/user/detail-blog.vue'),
             },

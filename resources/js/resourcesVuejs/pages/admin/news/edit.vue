@@ -209,19 +209,26 @@ export default defineComponent({
             const status_new = news.status_new;
 
             formData.append('title_new', title_new);
-            // const image = [];
-            // for (let i = 0; i < fileList.value.length; i++) {
-            //     formData.append(`${image}`, fileList.value[i].name);
-            //     formData.append(`${image}`, data);
-            // }
 
+            if (fileList.value && fileList.value.length > 0) {
+                fileList.value.forEach(file => {
+                    if (!file.originFileObj) {
+                        formData.append('imageExist', file.name);
+                    } else {
+                        // Nếu ảnh mới, thêm vào phần ảnh mới
+                        formData.append('image[]', file.originFileObj);
+                    }
+                });
+            }
+
+            formData.append('_method', 'PUT');
             formData.append('short_content', short_content);
             formData.append('category_id', category_id);
             formData.append('status_new', status_new);
 
-            axios.put(`http://127.0.0.1:8000/api/news/${newId.value}`, formData, {
+            axios.post(`http://127.0.0.1:8000/api/news/${newId.value}`, formData, {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'multipart/form-data'
                 }
             })
             .then(res => {

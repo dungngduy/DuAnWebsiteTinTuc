@@ -15,7 +15,7 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <!-- Trending Top -->
-                            <div v-for="(item, index) in newsTrendingTop" class="trending-top mb-30">
+                            <div v-for="(item, index) in newsTrendingTop" :key="index" class="trending-top mb-30">
                                 <div class="trend-top-img">
                                     <img
                                         :src="`/storage/uploads/news/${item.image}`"
@@ -25,7 +25,7 @@
                                         <span>{{ item.title }}</span>
                                         <h2 style="width: 500px;">
                                             <a href="#">
-                                                {{ item.title_new }}
+                                                <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">{{ item.title_new }}</router-link>
                                             </a>
                                         </h2>
                                     </div>
@@ -48,7 +48,7 @@
                                                 >
                                                 <h4>
                                                     <a href="#">
-                                                        {{ item.title_new }}
+                                                        <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">{{ item.title_new }}</router-link>
                                                     </a>
                                                 </h4>
                                             </div>
@@ -71,7 +71,7 @@
                                     <span class="color1">{{ item.title }}</span>
                                     <h4>
                                         <a href="#">
-                                            {{ item.title_new }}
+                                            <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">{{ item.title_new }}</router-link>
                                         </a>
                                     </h4>
                                 </div>
@@ -111,7 +111,7 @@
                                         <span class="color1">{{ item.title }}</span>
                                         <h4>
                                             <a href="#">
-                                                {{ item.title_new }}
+                                                <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">{{ item.title_new }}</router-link>
                                             </a>
                                         </h4>
                                     </div>
@@ -199,7 +199,7 @@
                                                             <span class="color1">{{ item.title }}</span>
                                                             <h4>
                                                                 <a href="#">
-                                                                    {{ item.title_new }}
+                                                                    <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">{{ item.title_new }}</router-link>
                                                                 </a>
                                                             </h4>
                                                         </div>
@@ -233,7 +233,9 @@
                                                         <div class="what-cap">
                                                             <span class="color1">{{ category.title_cate }}</span>
                                                             <h4>
-                                                                <a href="#">{{ item.title }}</a>
+                                                                <a href="#">
+                                                                    <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">{{ item.title }}</router-link>
+                                                                </a>
                                                             </h4>
                                                         </div>
                                                     </div>
@@ -354,7 +356,9 @@
                                     <div class="what-cap">
                                         <span class="color1">{{ item.title }}</span>
                                         <h4>
-                                            <a href="#">{{ item.title_new }}</a>
+                                            <a href="#">
+                                                <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">{{ item.title_new }}</router-link>
+                                            </a>
                                         </h4>
                                     </div>
                                 </div>

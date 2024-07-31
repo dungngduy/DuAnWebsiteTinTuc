@@ -12,11 +12,16 @@ class CategoriesController extends Controller
     {
         $page = $request->input('page', 1);
         $pageSize = $request->input('pageSize', 4);
+        $categoryId = $request->input('category_id', null);
 
         $query = DB::table('news')
             ->join('categories', 'news.category_id' , '=', 'categories.id')
             ->select('news.*', 'categories.title')
             ->orderByDesc('news.id');
+
+        if ($categoryId) {
+            $query->where('category_id', $categoryId);
+        }
 
         $totalNew = $query->count();
         $news = $query->skip(($page - 1) * $pageSize)->take($pageSize)->get();
@@ -37,14 +42,13 @@ class CategoriesController extends Controller
         return response()->json($categories);
     }
 
-    public function getCategoriesNewsSearch(Request $request){
-        $categoryId = $request->input('category_id');
-        $news = DB::table('news')
-            ->where('category_id', $categoryId)
+    public function getNewsRecent(){
+        $query = DB::table('news')
+            ->join('categories', 'news.category_id' , '=', 'categories.id')
+            ->select('news.*', 'categories.title')
+            ->orderByDesc('news.id')
+            ->limit(4)
             ->get();
-
-        return response()->json([
-            'news' => $news
-        ]);
+        return response()->json($query);
     }
 }
