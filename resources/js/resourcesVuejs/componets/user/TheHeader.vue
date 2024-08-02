@@ -120,7 +120,7 @@
                                                 <a href="/danh-muc">Danh mục bài viết</a>
                                                 <ul class="submenu">
                                                     <li v-for="category in categories" :key="category.id">
-                                                        <router-link :to="`/danh-muc/${category.id}`">{{ category.title }}</router-link>
+                                                        <router-link :to="`/danh-muc`">{{ category.title }}</router-link>
                                                     </li>
                                                 </ul>
                                             </li>
@@ -356,6 +356,16 @@ export default {
             this.$refs.loginPopup.openPopup();
         },
 
+        getAllCategories() {
+            axios.get(`http://127.0.0.1:8000/api/getAllCategories`)
+            .then(res => {
+                this.categories = res.data;
+            })
+            .catch(errors => {
+                console.log(errors);
+            });
+        },
+
         loadUser() {
             const userData = localStorage.getItem('user');
             if (userData) {
@@ -368,16 +378,6 @@ export default {
                 this.user = userInfo;
 
             }
-        },
-
-        getAllCategories() {
-            axios.get(`http://127.0.0.1:8000/api/getAllCategories`)
-            .then(res => {
-                this.categories = res.data;
-            })
-            .catch(errors => {
-                console.log(errors);
-            });
         }
     },
     mounted() {

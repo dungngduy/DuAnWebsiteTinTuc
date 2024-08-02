@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Login\InFoUserConntroller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
@@ -94,6 +95,9 @@ Route::post('/register', [RegisterController::class,'store']);
 // Login
 Route::post('/login', [LoginController::class,'index']);
 Route::post('/logout', [LoginController::class,'logout']);
+
+// Info User
+Route::put('/info-user/{id}', [InFoUserConntroller::class,'update']);
 
 // Index
 Route::get('getTrendingTopNews', [IndexController::class,'getTrendingTopNews']);

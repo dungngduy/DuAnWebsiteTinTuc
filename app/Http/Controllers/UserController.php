@@ -150,10 +150,21 @@ class UserController extends Controller
             'department_id.required'=> 'Vui lòng chọn phòng ban',
         ]);
 
+        if ($request->hasFile('avatar')) {
+            foreach ($request->file('avatar') as $file) {
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('public/uploads/users', $fileName);
+                $fileNames = $fileName;
+            }
+        } else {
+            $fileNames = $request->input('avatarExist');
+        }
+
         User::find($id)->update([
             'status_id' => $request['status_id'],
             'username' => $request['username'],
             'name' => $request['name'],
+            'avatar' => json_encode($fileNames),
             'email' => $request['email'],
             'department_id' => $request['department_id'],
         ]);

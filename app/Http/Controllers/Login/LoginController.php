@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -29,6 +30,9 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $role = $user->department_id;
+            User::find($user->id)->update([
+                'login_at' => now()
+            ]);
             return response()->json([
                 'user' => $user,
                 'role' => $role,

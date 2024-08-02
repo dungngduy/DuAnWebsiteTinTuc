@@ -3,28 +3,25 @@
         <a-card title="Cập nhật tài khoản" style="width: 100%">
             <div class="row">
                 <div class="col-12 col-sm-4">
-                    <div class="col-12 d-flex justify-content-center">
-                        <a-avatar :size="250">
-                            <template v-if="avatar" #icon>
-                                <img
-                                    :src="`/storage/uploads/users/${avatar}`"
-                                    alt="Avatar"
-                                />
-                            </template>
-                            <template v-else #icon>
-                                <img
-                                    src="https://static2.yan.vn/YanNews/2167221/202102/facebook-cap-nhat-avatar-doi-voi-tai-khoan-khong-su-dung-anh-dai-dien-e4abd14d.jpg"
-                                    alt="Avatar"
-                                />
-                            </template>
-                        </a-avatar>
-                    </div>
                     <div class="col-12 d-flex justify-content-center mt-3">
-                        <a-button>
-                            <i class="fa-solid fa-plus"></i>
-                            <span class="ms-2">Chọn ảnh</span>
-                        </a-button>
+                        <a-upload class="users"
+                            v-model:file-list="fileList"
+                            :action="`/api/users/${idUser}`"
+                            list-type="picture"
+                            accept="image/*"
+                            :before-upload="beforeUpload"
+                            @change="handleFileChange(event)"
+                        >
+                            <a-button>
+                                <upload-outlined></upload-outlined>
+                                Cập nhật ảnh
+                            </a-button>
+                        </a-upload>
+                        <br>
                     </div>
+                    <!-- <div class="col-12 d-flex justify-content-center mt-3">
+                        <small class="text-danger">* Lưu ý xóa ảnh cũ trớc khi cập nhật</small>
+                    </div> -->
                 </div>
                 <div class="col-12 col-sm-8">
                     <div class="row mb-3">
@@ -44,6 +41,7 @@
                                 style="width: 100%"
                                 :options="users_status"
                                 :filter-option="filterOption"
+                                @change="handleFileChange(event)"
                             ></a-select><br>
                             <small v-if="errors.status_id" class="text-danger">{{ errors.status_id[0] }}</small>
                         </div>
@@ -159,7 +157,7 @@
                             </label>
                         </div>
                         <div class="col-12 col-sm-5">
-                            <span>{{ login_at }}</span>
+                            <span>{{ format(login_at) }}</span>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -189,6 +187,7 @@
 </template>
 
 <script>
+import { UploadOutlined } from '@ant-design/icons-vue';
 import { defineComponent, ref, reactive, toRefs } from "vue";
 import { useRoute } from "vue-router";
 import { useRouter } from "vue-router";
@@ -196,6 +195,9 @@ import { message } from 'ant-design-vue';
 import { useMenu } from "../../../storePinia/storeMenu.js";
 import axios from "axios";
 export default defineComponent({
+    components: {
+        UploadOutlined,
+    },
     setup() {
         useMenu().onSelectedKeys(["admin-users"]);
 
@@ -204,6 +206,7 @@ export default defineComponent({
 
         const users_status = ref([]);
         const departments = ref([]);
+        const fileList = ref([]);
         const users = reactive({
             username: "",
             avatar: "",
@@ -218,17 +221,35 @@ export default defineComponent({
             change_password_at: "",
         });
         const errors = ref({});
+        const idUser = ref(route.params.id);
 
         const getUsersEdit = () => {
-            const idUser = route.params.id;
-
-            axios.get(`http://127.0.0.1:8000/api/users/${idUser}/edit`)
+            axios.get(`http://127.0.0.1:8000/api/users/${idUser.value}/edit`)
             .then(res => {
                 users.status_id = res.data.users.status_id;
                 users.username = res.data.users.username;
-                if (res.data.users.avatar) {
-                    users.avatar = res.data.users.avatar.replace(/"/g, '');
+
+                if (Array.isArray(res.data.users.avatar)) {
+                    fileList.value = res.data.users.avatar.map(img => ({
+                        uid: img.id,
+                        name: img.name,
+                        status: 'done',
+                        originFileObj: img.originFileObj,
+                        url: `/storage/uploads/users/${img.name}`,
+                    }));
+                } else {
+                    if (res.data.users.avatar) {
+                        const image = res.data.users.avatar;
+                        const newImage = image.replace(/^"(.*)"$/, '$1');
+                        fileList.value = [{
+                            uid: 1,
+                            name: newImage,
+                            status: 'done',
+                            url: `/storage/uploads/users/${newImage}`,
+                        }];
+                    }
                 }
+
                 users.name = res.data.users.name;
                 users.email = res.data.users.email;
                 users.department_id = res.data.users.department_id;
@@ -245,9 +266,37 @@ export default defineComponent({
         }
 
         const updateUsers = () => {
-            const idUser = route.params.id;
+            const formData = new FormData();
 
-            axios.put(`http://127.0.0.1:8000/api/users/${idUser}`, users)
+            formData.append('username', users.username);
+
+            if (fileList.value && fileList.value.length > 0) {
+                fileList.value.forEach(file => {
+                    if (!file.originFileObj) {
+                        formData.append('avatarExist', file.name);
+                    } else {
+                        // Nếu ảnh mới, thêm vào phần ảnh mới
+                        formData.append('avatar[]', file.originFileObj);
+                    }
+                });
+            }
+
+            formData.append('_method', 'PUT');
+            formData.append('name', users.name);
+            formData.append('email', users.email);
+            formData.append('department_id', users.department_id);
+            formData.append('status_id', users.status_id);
+            formData.append('change_password', users.change_password);
+            formData.append('password', users.password);
+            formData.append('password_confirmation', users.password_confirmation);
+            formData.append('login_at', users.login_at);
+            formData.append('change_password_at', users.change_password_at);
+
+            axios.post(`http://127.0.0.1:8000/api/users/${idUser.value}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
             .then(res => {
                 if(res.status == 200) {
                     message.success('Cập nhật thành công');
@@ -266,6 +315,26 @@ export default defineComponent({
 
         const filterOption = (input, option) => {
             return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+        };
+
+        const beforeUpload = (file) => {
+            const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+            if (!isJpgOrPng) {
+                message.error('Bạn chỉ có thể tải lên tệp JPG/PNG!');
+            }
+            return isJpgOrPng;
+        };
+
+        const handleFileChange = (event) => {
+            if (event && event.target && event.target.files) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                reader.onload = () => {
+                    fileList.value = reader.result;
+                    users.avatar = file;
+                };
+                reader.readAsDataURL(file);
+            }
         };
 
         function format(inputDate) {
@@ -288,11 +357,45 @@ export default defineComponent({
             users_status,
             departments,
             ...toRefs(users),
+            fileList,
+            idUser,
             errors,
             filterOption,
+            beforeUpload,
+            handleFileChange,
             updateUsers,
             format,
         }
     },
 });
 </script>
+
+<style>
+    .users .ant-upload {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .users .ant-upload-list-item {
+        border: none !important;
+        display: block !important;
+        width: 265px !important;
+    }
+
+    .users .ant-upload-list-item a img {
+        height: 250px !important;
+        width: 250px !important;
+        border-radius: 50% !important;
+    }
+
+    .users .ant-upload-list-item span {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .users .ant-upload-list-item-actions {
+        margin-top: 20px !important;
+    }
+</style>
