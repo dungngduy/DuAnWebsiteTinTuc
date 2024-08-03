@@ -10,6 +10,7 @@ use App\Http\Controllers\DetailNewController;
 use App\Http\Controllers\client\DetailNewController as ClientDetailNewController;
 use App\Http\Controllers\client\CategoriesController as ClientCategoriesController;
 use App\Http\Controllers\Client\IndexController;
+use App\Http\Controllers\Login\ForgetPasswordController;
 use App\Http\Controllers\Login\LoginController;
 use App\Http\Controllers\Login\RegisterController;
 
@@ -32,15 +33,15 @@ use App\Http\Controllers\Login\RegisterController;
 // Users
 Route::get('/users', [UserController::class, 'index']);
 
-// Create
+// Create users
 Route::get('/users/create', [UserController::class,'create']);
 Route::post('/post-user', [UserController::class,'store']);
 
-// Edit
+// Edit users
 Route::get('/users/{id}/edit', [UserController::class,'edit']);
 Route::put('/users/{id}', [UserController::class,'update']);
 
-// delete
+// delete users
 Route::delete('/users/{id}', [UserController::class,'destroy']);
 
 
@@ -98,6 +99,9 @@ Route::post('/logout', [LoginController::class,'logout']);
 
 // Info User
 Route::put('/info-user/{id}', [InFoUserConntroller::class,'update']);
+
+// Forget Password
+Route::post('/send-mail', [ForgetPasswordController::class,'sendMail']);
 
 // Index
 Route::get('getTrendingTopNews', [IndexController::class,'getTrendingTopNews']);

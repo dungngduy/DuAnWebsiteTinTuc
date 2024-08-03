@@ -13,6 +13,7 @@ class CategoriesController extends Controller
         $page = $request->input('page', 1);
         $pageSize = $request->input('pageSize', 4);
         $categoryId = $request->input('category_id', null);
+        $search = $request->input('search', null);
 
         $query = DB::table('news')
             ->join('categories', 'news.category_id' , '=', 'categories.id')
@@ -21,6 +22,12 @@ class CategoriesController extends Controller
 
         if ($categoryId) {
             $query->where('category_id', $categoryId);
+        }
+
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('news.title_new', 'like', '%' . $search . '%');
+            });
         }
 
         $totalNew = $query->count();

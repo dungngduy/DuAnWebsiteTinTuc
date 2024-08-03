@@ -36,7 +36,7 @@ class DetailNewController extends Controller
             'order_index' => 'required',
         ], [
             'main_content.required' => 'Vui lòng nhập nội dung của bài viết.',
-            'order_index.required' => 'Vui lòng chọn bài viết.',
+            'order_index.required' => 'Vui lòng điền thứ tự hiển thi của nội dung.',
         ]);
 
         DetailNew::create([
@@ -63,7 +63,7 @@ class DetailNewController extends Controller
             'order_index' => 'required',
         ], [
             'main_content.required' => 'Vui lòng nhập nội dung của bài viết.',
-            'order_index.required' => 'Vui lòng chọn bài viết.',
+            'order_index.required' => 'Vui lòng điền thứ tự hiển thi của nội dung.',
         ]);
 
         DetailNew::find($id)->update([

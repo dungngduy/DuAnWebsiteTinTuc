@@ -11,7 +11,6 @@ class InFoUserConntroller extends Controller
 {
     public function update(Request $request, $id)
     {
-        dd($request->all());
         $request->validate([
             'username' => 'required|unique:users,username,' . $id,
             'name' => 'required|max:255',
@@ -45,7 +44,7 @@ class InFoUserConntroller extends Controller
             'email' => $request['email'],
         ]);
 
-        if($request['change_password'] === true){
+        if($request['change_password'] == true){
             $request->validate(
                 [
                     'password' => 'required|confirmed',

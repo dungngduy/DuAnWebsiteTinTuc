@@ -230,9 +230,9 @@ export default defineComponent({
             avatar: "",
             name: "",
             email: "",
+            change_password: false,
             password: "",
             password_confirmation: "",
-            change_password: false,
         });
         const errors = ref({});
 
@@ -240,11 +240,7 @@ export default defineComponent({
             const userData = localStorage.getItem('user');
             if (userData) {
                 const userInfo = JSON.parse(userData);
-                // if(userInfo.avatar !== null){
-                //     userInfo.avatar = userInfo.avatar.replace(/"/g, '');
-                // } else {
-                //     userInfo.avatar = userInfo.avatar;
-                // }
+
                 if (Array.isArray(userInfo.avatar)) {
                     fileList.value = userInfo.avatar.map(img => ({
                         uid: img.id,
@@ -287,12 +283,12 @@ export default defineComponent({
                 });
             }
 
-            formData.append('_method', 'PUT');
             formData.append('name', users.name);
             formData.append('email', users.email);
             formData.append('change_password', users.change_password);
             formData.append('password', users.password);
             formData.append('password_confirmation', users.password_confirmation);
+            formData.append('_method', 'PUT');
 
             axios
                 .post(`http://127.0.0.1:8000/api/info-user/${idUser}`, formData, {

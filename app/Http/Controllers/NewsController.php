@@ -124,7 +124,7 @@ class NewsController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'title_new' => 'required',
+            'title_new' => 'required|string',
             // 'image' => 'required|min:1',
             // 'image.*' => 'image|max:2048',
             'short_content' => 'required',

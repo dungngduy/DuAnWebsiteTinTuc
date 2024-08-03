@@ -8,14 +8,13 @@
             <div class="right-section">
                 <h2>Quên mật khẩu</h2>
                 <p>Điền email gắn với tài khoản của bạn để nhận thông báo mật khẩu qua Gmail nhé. Xin cảm ơn!</p>
-                <form @submit.prevent="forgetPassword">
+                <form @submit.prevent="sendRequestMail">
                     <div class="form-group">
                         <label for="username">Email:</label>
                         <input
                             type="email"
                             id="email"
                             v-model="email"
-                            required
                         />
                     </div>
                     <div class="d-flex justify-content-center align-items-center">
@@ -31,6 +30,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { message } from 'ant-design-vue';
+
 export default {
     data() {
         return {
@@ -48,6 +50,22 @@ export default {
         },
         closePopupForgetPassword() {
             this.showPopup = false;
+        },
+
+        sendRequestMail() {
+            axios.post(`http://127.0.0.1:8000/api/send-mail`, { email: this.email })
+            .then(res => {
+                // console.log(res);
+                if (res.status == 200) {
+                    message.success(res.data.message);
+                    this.closePopupForgetPassword();
+                }
+            })
+            .catch(errors => {
+                if (errors.response) {
+                    message.destroy(errors.response.data.message);
+                }
+            })
         },
     },
 };

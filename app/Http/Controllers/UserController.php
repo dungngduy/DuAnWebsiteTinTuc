@@ -169,7 +169,7 @@ class UserController extends Controller
             'department_id' => $request['department_id'],
         ]);
 
-        if($request['change_password'] === true){
+        if($request['change_password'] == true){
             $request->validate(
                 [
                     'password' => 'required|confirmed',

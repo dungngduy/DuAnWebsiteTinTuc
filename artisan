@@ -149,6 +149,5 @@ exit($status);
 
 // Đầu việc cần làm ngày mai
 
-// Đổ bài viết ra các trang
+// Tạo khóa ngoại trong models detail-new và new
 // Hoàn thành chức năng bình luận
-// Phân trang các bài viết gần đây ở phần cuối trang index (làm cuối)

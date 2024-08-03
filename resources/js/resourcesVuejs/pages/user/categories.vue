@@ -65,10 +65,11 @@
                 <div class="col-lg-4">
                     <div class="blog_right_sidebar">
                         <aside class="single_sidebar_widget search_widget">
-                            <form action="#">
+                            <form @submit.prevent="searchNews">
                                 <div class="form-group">
                                     <div class="input-group mb-3">
                                         <input
+                                            v-model="inputValue"
                                             type="text"
                                             class="form-control"
                                             placeholder="Tìm kiếm bài viết"
@@ -84,7 +85,7 @@
                                 </div>
                                 <button
                                     class="button rounded-0 primary-bg w-100 btn_1 boxed-btn"
-                                    type="submit"
+                                    html-type="submit"
                                 >
                                     Tìm kiếm
                                 </button>
@@ -227,14 +228,17 @@ export default defineComponent({
         const current = ref(1);
         const categories = ref([]);
         const selectedCategory = ref(null);
+        const searchKey = ref("");
+        const inputValue = ref('');
         const newsRecent = ref([]);
 
-        const getAllNews = (page, pageSize, category_id = null) => {
+        const getAllNews = (page, pageSize, category_id = null, search = null) => {
             axios.get(`http://127.0.0.1:8000/api/getAllNews`, {
                 params: {
                     page: page,
                     pageSize: pageSize,
-                    category_id: category_id
+                    category_id: category_id,
+                    search: search,
                 }
             })
             .then(res => {
@@ -292,17 +296,23 @@ export default defineComponent({
         const searchProductsByCategory = (categoryId) => {
             selectedCategory.value = categoryId;
             current.value = 1;
-            getAllNews(1, pageSize.value, categoryId);
+            getAllNews(1, pageSize.value, categoryId, searchKey.value);
+        };
+
+        const searchNews = () => {
+            searchKey.value = inputValue.value;
+            getAllNews(1, pageSize.value, selectedCategory.value, searchKey.value);
+            inputValue.value = '';
         };
 
         const handlePageChange = (page) => {
             current.value = page;
-            getAllNews(page, pageSize.value, selectedCategory.value); // Cập nhật danh sách bài viết khi thay đổi trang
+            getAllNews(page, pageSize.value, selectedCategory.value, searchKey.value); // Cập nhật danh sách bài viết khi thay đổi trang
         };
 
         const handlePageSizeChange = (current, size) => {
             pageSize.value = size;
-            getAllNews(current, size, selectedCategory.value); // Cập nhật danh sách bài viết khi thay đổi kích thước trang
+            getAllNews(current, size, selectedCategory.value, searchKey.value); // Cập nhật danh sách bài viết khi thay đổi kích thước trang
         };
 
         getAllNews();
@@ -315,6 +325,9 @@ export default defineComponent({
             current,
             pageSize,
             totalNew,
+            searchKey,
+            inputValue,
+            searchNews,
             handlePageChange,
             handlePageSizeChange,
             searchProductsByCategory,
