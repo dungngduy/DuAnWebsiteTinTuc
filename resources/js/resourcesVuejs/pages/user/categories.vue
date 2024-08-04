@@ -40,7 +40,9 @@
                                     <li>
                                         <a href="#">
                                             <i class="fa fa-comments"></i>
-                                            <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">03 Comments</router-link>
+                                            <router-link :to="{ name: 'chi-tiet-bai-viet', params: {id: item.id} }">
+                                                {{ item.comment_count > 0 ? (item.comment_count < 10 ? `0${item.comment_count}` : item.comment_count) : '0' }} bình luận
+                                            </router-link>
                                         </a>
                                     </li>
                                 </ul>
@@ -249,6 +251,7 @@ export default defineComponent({
 
                 news.value = processedNews;
                 totalNew.value = res.data.totalNew;
+
             })
             .catch(errors => {
                 console.log(errors);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\client;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -32,10 +33,24 @@ class CategoriesController extends Controller
 
         $totalNew = $query->count();
         $news = $query->skip(($page - 1) * $pageSize)->take($pageSize)->get();
+        // Lấy danh sách các ID bài viết
+        $newsIds = $news->pluck('id');
+
+        // Lấy số lượng bình luận cho mỗi ID bài viết
+        $commentCounts = Comment::whereIn('new_id', $newsIds)
+            ->select('new_id', DB::raw('count(*) as count'))
+            ->groupBy('new_id')
+            ->pluck('count', 'new_id');
+
+        // Gán số lượng bình luận vào mỗi bài viết
+        $news->map(function ($item) use ($commentCounts) {
+            $item->comment_count = $commentCounts->get($item->id, 0); // Mặc định là 0 nếu không có bình luận
+            return $item;
+        });
 
         return response()->json([
             'news' => $news,
-            'totalNew' => $totalNew
+            'totalNew' => $totalNew,
         ]);
     }
 

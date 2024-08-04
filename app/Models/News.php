@@ -22,4 +22,12 @@ class News extends Model
     {
         return $this->belongsTo(Categories::class);
     }
+
+    public function details(){
+        return $this->hasMany(DetailNew::class, 'new_id', 'id');
+    }
+
+    public function comments(){
+        return $this->hasMany(Comment::class, 'new_id');
+    }
 }

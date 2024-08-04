@@ -119,3 +119,5 @@ Route::get('getNewsRecent', [ClientCategoriesController::class,'getNewsRecent'])
 
 // DetailNew
 Route::get('getDetailNew/{id}', [ClientDetailNewController::class,'getDetailNew']);
+Route::post('comments', [ClientDetailNewController::class,'comments']);
+Route::get('getComments/{id}', [ClientDetailNewController::class,'getComments']);

@@ -15,6 +15,10 @@ class DetailNew extends Model
         'new_id'
     ];
 
+    public function new(){
+        return $this->belongsTo(News::class, 'new_id', 'id');
+    }
+
     public function getTable()
     {
         return 'detail_new'; // Trả về tên bảng cụ thể
