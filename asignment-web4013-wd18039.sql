@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost:3306
--- Thời gian đã tạo: Th7 31, 2024 lúc 03:49 PM
+-- Thời gian đã tạo: Th8 05, 2024 lúc 08:31 AM
 -- Phiên bản máy phục vụ: 8.0.30
 -- Phiên bản PHP: 8.1.10
 
@@ -46,6 +46,35 @@ INSERT INTO `categories` (`id`, `title`, `status`, `created_at`, `updated_at`) V
 (4, 'Du lịch', 1, NULL, NULL),
 (5, 'Giải trí', 1, '2024-07-27 15:54:46', '2024-07-27 15:54:46'),
 (6, 'Khoa học', 1, '2024-07-27 15:55:01', '2024-07-27 15:55:01');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` bigint UNSIGNED NOT NULL,
+  `content` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
+  `new_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `comments`
+--
+
+INSERT INTO `comments` (`id`, `content`, `new_id`, `user_id`, `created_at`, `updated_at`) VALUES
+(4, 'Ô wao tuyệt quá', 32, 9, '2024-08-04 17:01:57', '2024-08-04 17:01:57'),
+(6, 'haha', 32, 9, '2024-08-04 18:11:54', '2024-08-04 18:11:54'),
+(7, 'nói gì hay hay vậy', 32, 9, '2024-08-04 18:18:14', '2024-08-04 18:18:14'),
+(8, 'Bài viết này hay quá', 32, 8, '2024-08-04 18:56:48', '2024-08-04 18:56:48'),
+(10, 'Bài viết ý nghĩa quá', 31, 8, '2024-08-04 19:06:46', '2024-08-04 19:06:46'),
+(11, 'Công nhận nó to thật', 34, 8, '2024-08-04 19:09:30', '2024-08-04 19:09:30'),
+(12, 'Mà ảnh hơi mờ', 34, 8, '2024-08-04 19:11:28', '2024-08-04 19:11:28'),
+(13, 'Haha trông cute quá', 33, 8, '2024-08-04 19:11:47', '2024-08-04 19:11:47');
 
 -- --------------------------------------------------------
 
@@ -136,7 +165,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (66, '2024_07_03_145621_create_departments_table', 2),
 (67, '2024_07_03_150512_alter_users_table', 2),
 (68, '2024_07_11_194450_create_categories_table', 2),
-(69, '2024_07_12_221916_create_news_table', 2);
+(69, '2024_07_12_221916_create_news_table', 2),
+(70, '2024_08_04_230737_create_comments_table', 3);
 
 -- --------------------------------------------------------
 
@@ -160,7 +190,7 @@ CREATE TABLE `news` (
 --
 
 INSERT INTO `news` (`id`, `title_new`, `image`, `short_content`, `category_id`, `status_new`, `created_at`, `updated_at`) VALUES
-(23, 'Tại sao cho muối khi luộc rau?', '\"1722095898_new1.jpg\"', 'Muối ngoài việc làm cho món rau luộc thêm đậm đà, còn có thể giúp giữ cho rau sau khi luộc xong có màu xanh bắt mắt.', 1, 1, '2024-07-27 15:58:18', '2024-07-27 15:58:18'),
+(23, 'Tại sao cho muối khi luộc rau?', '\"1722445999_new1.jpg\"', 'Muối ngoài việc làm cho món rau luộc thêm đậm đà, còn có thể giúp giữ cho rau sau khi luộc xong có màu xanh bắt mắt.', 1, 1, '2024-07-27 15:58:18', '2024-07-31 17:13:19'),
 (24, '5 đồ gia dụng được quảng cáo thổi phồng nhất', '\"1722095953_new2.jpg\"', 'Xem quảng cáo trên mạng nhiều người mê những món đồ gia dụng thông minh, tiện lợi nhưng đem về dùng chỉ thấy bực mình vì nhiều thứ chẳng khác gì món đồ chơi.', 1, 1, '2024-07-27 15:59:13', '2024-07-27 15:59:13'),
 (25, 'Khóa tiếng Anh 4.0 cho lãnh đạo, cam kết thành thạo sau 6 tháng', '\"1722096015_new3.png\"', 'Giờ học linh hoạt 24/24, học 1 - 1 với giáo viên Âu, Mỹ, lộ trình xây dựng theo mục tiêu.', 1, 1, '2024-07-27 16:00:15', '2024-07-27 16:00:15'),
 (26, 'Những khoảnh khắc ấn tượng tại lễ khai mạc Olympic 2024', '\"1722096081_new4.jpg\"', 'Lễ khai mạc Olympic Paris 2024 thành công với nhiều màn trình diễn ấn tượng, bất chấp cơn mưa nặng hạt và sự cố đường sắt cao tốc.', 2, 1, '2024-07-27 16:01:21', '2024-07-27 16:01:21'),
@@ -184,6 +214,13 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `password_reset_tokens`
+--
+
+INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
+('nguyenduydung1809@gmail.com', '$2y$12$I.KYziSItJ0xBB4D9x.lm.oui5YFuGdG5oHjj6r6gAXkwL5wnyeWy', '2024-08-03 16:48:34');
 
 -- --------------------------------------------------------
 
@@ -232,9 +269,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `avatar`, `username`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `login_at`, `change_password_at`, `created_at`, `updated_at`, `department_id`, `status_id`) VALUES
-(1, NULL, 'admin', 'Admin', 'admin@gmail.com', NULL, '$2y$12$wv.vfHniHESzYbdpVW18z.wS7nrWV1IWsdm4dgzSlaDzHtKU9ECrC', NULL, NULL, NULL, NULL, NULL, 1, 1),
-(8, '\"1721747870_avt.jpeg\"', 'simon', 'Đặng Tài Luân', 'luan2334@gmail.com', NULL, '$2y$12$nAXulzdmv0/MFfyQRdMcl.RCJogq3sfpAUsKZrWTFtx/NqPGT5Q3G', NULL, NULL, NULL, '2024-07-23 15:17:51', '2024-07-23 15:17:51', 2, 1),
-(9, NULL, 'nguyenduydung', 'Nguyễn Duy Dũng', 'nguyenduydung1809@gmail.com', NULL, '$2y$12$P3dZLCYQJoxJFhmxxn.B4umTPqNmtZmyibWPm/CzdfslCcH9gtrF2', NULL, NULL, '2024-07-27 15:02:42', '2024-07-23 15:49:34', '2024-07-27 15:02:42', 2, 1);
+(1, NULL, 'admin', 'Admin', 'admin@gmail.com', NULL, '$2y$12$wv.vfHniHESzYbdpVW18z.wS7nrWV1IWsdm4dgzSlaDzHtKU9ECrC', NULL, '2024-08-05 07:29:35', NULL, NULL, '2024-08-05 07:29:35', 1, 1),
+(8, '\"1721747870_avt.jpeg\"', 'simon', 'Đặng Tài Luân', 'luan2334@gmail.com', NULL, '$2y$12$hMjJztHQdCfgC3KVpIwnXuvFmNh754esCs6LbppE1DSz6NbCSk2NW', NULL, '2024-08-04 18:56:22', '2024-08-04 18:56:08', '2024-07-23 15:17:51', '2024-08-04 18:56:22', 2, 1),
+(9, '\"1722621834_hinh-anh-avatar-sadboiz-anime-dep-nhat.jpg\"', 'nguyenduydung', 'Nguyễn Duy Dũng', 'nguyenduydung1809@gmail.com', NULL, '$2y$12$hxRZqc43nqo4mn38oKwY.OzDY9ETMTOSC5z7cPXPAtgUnEuhdABuu', NULL, '2024-08-05 08:01:29', '2024-08-03 17:16:19', '2024-07-23 15:49:34', '2024-08-05 08:01:29', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -266,6 +303,14 @@ INSERT INTO `user_status` (`id`, `name`, `created_at`, `updated_at`) VALUES
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `comments_new_id_foreign` (`new_id`),
+  ADD KEY `comments_user_id_foreign` (`user_id`);
 
 --
 -- Chỉ mục cho bảng `departments`
@@ -340,6 +385,12 @@ ALTER TABLE `categories`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT cho bảng `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT cho bảng `departments`
 --
 ALTER TABLE `departments`
@@ -349,7 +400,7 @@ ALTER TABLE `departments`
 -- AUTO_INCREMENT cho bảng `detail_new`
 --
 ALTER TABLE `detail_new`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `failed_jobs`
@@ -361,13 +412,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT cho bảng `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT cho bảng `news`
 --
 ALTER TABLE `news`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT cho bảng `personal_access_tokens`
@@ -390,6 +441,13 @@ ALTER TABLE `user_status`
 --
 -- Các ràng buộc cho các bảng đã đổ
 --
+
+--
+-- Các ràng buộc cho bảng `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_new_id_foreign` FOREIGN KEY (`new_id`) REFERENCES `news` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `comments_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `users`
