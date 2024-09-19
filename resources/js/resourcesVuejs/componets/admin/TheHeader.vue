@@ -46,17 +46,6 @@
     >
         <TheMenu />
     </a-drawer>
-
-    <a-drawer
-        v-model:open="openUser"
-        class="custom-class"
-        title="Tài khoản"
-        placement="right"
-    >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-    </a-drawer>
 </template>
 
 <script>

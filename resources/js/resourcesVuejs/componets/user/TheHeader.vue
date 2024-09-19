@@ -304,7 +304,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-2 col-lg-2 col-md-4">
-                                <div class="icon-user f-right ms-2">
+                                <div class="icon-user f-right ms-2" style="cursor: pointer;">
                                     <i @click="openLoginPopup" class="fa-solid fa-user"></i>
                                 </div>
                                 <div
