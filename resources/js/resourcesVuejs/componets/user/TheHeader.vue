@@ -130,7 +130,7 @@
                                                 >
                                             </li>
                                             <li>
-                                                <a href="contact.html"
+                                                <a href="/lien-he"
                                                     >Liên hệ</a
                                                 >
                                             </li>
