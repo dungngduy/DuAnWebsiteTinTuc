@@ -38,5 +38,5 @@ npm run dev
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000) to view it in the browser.
 
